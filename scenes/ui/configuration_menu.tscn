@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://brfk8gu52hljj"]
+
+[ext_resource type="Texture2D" uid="uid://ckc1eitpgsa8l" path="res://sprites/GUI/background1.png" id="1_w5xxc"]
+
+[node name="configuration_menu" type="Control" unique_id=1608368909]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=1847947322]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_w5xxc")
+expand_mode = 1
+
+[node name="MainPanel" type="Panel" parent="." unique_id=210886789]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.5
+offset_top = -279.0
+offset_right = 512.5
+offset_bottom = 279.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitlePanel" type="Panel" parent="MainPanel" unique_id=738123289]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -512.5
+offset_right = 512.5
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="MainPanel/TitlePanel" unique_id=186133373]
+layout_mode = 0
+offset_left = 7.0
+offset_right = 1025.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 24
+text = "AJUSTES"
+vertical_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="MainPanel/TitlePanel" unique_id=1603465703]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -15.696201
+offset_right = -3.5
+offset_bottom = 15.696201
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="OptionsPanel" type="Panel" parent="." unique_id=57678869]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 85.0
+offset_right = 1089.0
+offset_bottom = 135.0
+
+[node name="GameButton" type="Button" parent="OptionsPanel" unique_id=2103274739]
+layout_mode = 0
+offset_left = -0.5
+offset_right = 79.5
+offset_bottom = 50.0
+text = "JUEGO"
+
+[node name="VideoButton" type="Button" parent="OptionsPanel" unique_id=1787991031]
+layout_mode = 0
+offset_left = 79.5
+offset_right = 159.5
+offset_bottom = 50.0
+text = "VIDEO"
+
+[node name="ControlsButton" type="Button" parent="OptionsPanel" unique_id=1823274566]
+layout_mode = 0
+offset_left = 159.5
+offset_right = 261.5
+offset_bottom = 50.0
+text = "CONTROLES"
+
+[node name="AudioButton" type="Button" parent="OptionsPanel" unique_id=177109773]
+layout_mode = 0
+offset_left = 261.5
+offset_right = 341.5
+offset_bottom = 50.0
+text = "AUDIO"
+
+[node name="EffectsButton" type="Button" parent="OptionsPanel" unique_id=825349363]
+layout_mode = 0
+offset_left = 341.5
+offset_right = 421.5
+offset_bottom = 50.0
+text = "EFECTOS"
+
+[node name="OtherButton" type="Button" parent="OptionsPanel" unique_id=889658820]
+layout_mode = 0
+offset_left = 421.5
+offset_right = 501.5
+offset_bottom = 50.0
+text = "OTRO"
+
+[node name="GameOptionsPanel" type="Panel" parent="." unique_id=1408088611]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 135.0
+offset_right = 1089.0
+offset_bottom = 603.0
+
+[node name="GamePanel" type="Panel" parent="GameOptionsPanel" unique_id=623855038]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -488.0
+offset_top = 36.0
+offset_right = 488.0
+offset_bottom = 242.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="GameOptionsPanel/GamePanel" unique_id=916275609]
+layout_mode = 0
+offset_left = 2.5
+offset_right = 56.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.14509805, 1, 1, 1)
+text = "JUEGO"
+vertical_alignment = 1
+
+[node name="OpcionsGamePanel" type="Panel" parent="GameOptionsPanel/GamePanel" unique_id=635747171]
+layout_mode = 0
+offset_left = 0.5
+offset_top = 28.0
+offset_right = 976.5
+offset_bottom = 206.0
+
+[node name="CameraVibrationsPanel" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel" unique_id=1416149584]
+layout_mode = 0
+offset_right = 976.0
+offset_bottom = 25.0
+
+[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/CameraVibrationsPanel" unique_id=1249994745]
+layout_mode = 0
+offset_right = 166.0
+offset_bottom = 26.0
+text = "Vibracion de Camara"
+vertical_alignment = 1
+
+[node name="RetrasoDControlPanel2" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel" unique_id=59367792]
+layout_mode = 0
+offset_top = 35.0
+offset_right = 976.0
+offset_bottom = 60.0
+
+[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/RetrasoDControlPanel2" unique_id=487327501]
+layout_mode = 0
+offset_right = 166.0
+offset_bottom = 26.0
+text = "Retraso del Control"
+vertical_alignment = 1
