@@ -131,13 +131,11 @@ public partial class CharacterSelect : Control
 	private void OnConfirm()
 	{
 		GameManager.Instance.SelectedCharacterIndex = _selectedIndex;
-			if (_selectedIndex < _scenePaths.Length)
-		GameManager.Instance.SelectedCharacterScene = _scenePaths[_selectedIndex];
-			if (_selectedIndex < _defaultWeapons.Length)
-		GameManager.Instance.DefaultWeaponScene = _defaultWeapons[_selectedIndex];
+		if (_selectedIndex < _scenePaths.Length)
+			GameManager.Instance.SelectedCharacterScene = _scenePaths[_selectedIndex];
 
-		GameManager.Instance.ResetRun();
-		GetTree().ChangeSceneToFile("res://scenes/world.tscn");
+		//GameManager.Instance.ResetRun();
+		GetTree().ChangeSceneToFile("res://scenes/ui/class_select.tscn");
 	}
 	
 	private void OnBack()

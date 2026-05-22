@@ -44,7 +44,7 @@ public partial class Enemy : CharacterBody2D, IDamageable
 		MoveAndSlide();
 		
 		float distanceToPlayer = GlobalPosition.DistanceTo(_player.GlobalPosition);
-		if (distanceToPlayer < 30f && _damageCooldownTimer <= 0f)
+		if (distanceToPlayer < 25f && _damageCooldownTimer <= 0f)
 		{
 			_player.TakeDamage(Damage);
 			_damageCooldownTimer = DamageCooldown;

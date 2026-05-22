@@ -5,151 +5,103 @@ public partial class LevelUpScreen : CanvasLayer
 {
 	private WeaponManager _weaponManager;
 	private Player        _player;
-
-	private List<(string Name, string Desc, System.Action Apply)> _upgradePool;
-	private List<WeaponData> _weaponPool;      // todas las armas disponibles
-	private List<string>     _ownedWeapons = new(); // armas ya obtenidas
+	private List<WeaponData>    _weaponPool;
+	private List<string>        _ownedWeapons = new();
 
 	public override void _Ready()
 	{
 		ProcessMode = ProcessModeEnum.Always;
-		Visible = false;
-		
+		Visible     = false;
 		GameManager.Instance.LevelUp -= ShowLevelUpScreen;
 		GameManager.Instance.LevelUp += ShowLevelUpScreen;
-		//GameManager.Instance.LevelUp += ShowLevelUpScreen;
 	}
-	
+
 	public override void _ExitTree()
 	{
 		GameManager.Instance.LevelUp -= ShowLevelUpScreen;
 	}
-	
-	// ─── Pools ────────────────────────────────────────────────────────────────
-
-	private void BuildUpgradePool()
-	{
-		_upgradePool = new List<(string, string, System.Action)>
-		{
-			("Daño +10",          "Todas tus armas hacen mas daño",   () => _weaponManager.UpgradeDamage(10f)),
-			("Vel. disparo",      "Todas disparan mas rapido",         () => _weaponManager.UpgradeFireRate(0.1f)),
-			("Bala extra",        "Todas disparan una bala adicional", () => _weaponManager.UpgradeBulletCount()),
-			("+20 HP max",        "Aumenta tu vida maxima",            () => { _player.MaxHp += 20f; _player.Heal(20f); }),
-			("+20 Velocidad",     "Te mueves mas rapido",              () => _player.Speed += 20f),
-			("Curacion",          "Recupera 30 HP ahora",              () => _player.Heal(30f)),
-		};
-	}
-
-	private void BuildWeaponPool()
-	{
-		_weaponPool = WeaponLibrary.BuildAll();
-	}
-
-	// ─── Mostrar pantalla ─────────────────────────────────────────────────────
 
 	private void ShowLevelUpScreen()
 	{
-		if (_player == null)
-			_player = GetTree().GetFirstNodeInGroup("player") as Player;
-		if (_weaponManager == null)
-			_weaponManager = _player?.GetNode<WeaponManager>("WeaponManager");
+		if (_player       == null) _player       = GetTree().GetFirstNodeInGroup("player") as Player;
+		if (_weaponManager == null) _weaponManager = _player?.GetNode<WeaponManager>("WeaponManager");
 
-		BuildUpgradePool();
-		BuildWeaponPool();
+		_weaponPool = WeaponLibrary.BuildAll();
 
-		Visible = true;
+		Visible          = true;
 		GetTree().Paused = true;
 
 		var available = GetAvailableWeapons();
-
-		//Solo necesita al menos 1 arma disponible y que no tenga el máximo
-		bool weaponPoolAvailable = available.Count >= 1
-							   	&& _weaponManager.WeaponCount < WeaponManager.MaxWeapons;
-
-		bool showWeapons = weaponPoolAvailable && GD.RandRange(0, 1) == 0;
+		bool canAddWeapon = available.Count >= 1 && _weaponManager.WeaponCount < WeaponManager.MaxWeapons;
+		bool showWeapons  = canAddWeapon && GD.RandRange(0, 1) == 0;
 
 		if (showWeapons)
 			ShowWeaponCards(available);
 		else
-			ShowUpgradeCards();
+			ShowWeaponUpgradeCards(); //mejoras por arma específica
 	}
 
-	// ─── Pool de mejoras ──────────────────────────────────────────────────────
-
-	private void ShowUpgradeCards()
-	{
-		var shuffled = new List<(string, string, System.Action)>(_upgradePool);
-		shuffled.Sort((a, b) => GD.RandRange(0, 1) == 0 ? -1 : 1);
-
-		Button[] cards = GetCards();
-
-		for (int i = 0; i < cards.Length; i++)
-		{
-			cards[i].Visible = true; //siempre visible en mejoras
-			var captured = shuffled[i];
-			DisconnectCard(cards[i]);
-			cards[i].Text = $"{captured.Item1}\n{captured.Item2}";
-			cards[i].Pressed += () => SelectUpgrade(captured.Item3);
-		}
-	}
-
-	private void SelectUpgrade(System.Action apply)
-	{
-		apply.Invoke();
-		Close();
-	}
-
-	// ─── Pool de armas ────────────────────────────────────────────────────────
-
+	// ── Pool de armas nuevas ───────────────────────────────────────────────
 	private void ShowWeaponCards(List<WeaponData> available)
 	{
 		available.Sort((a, b) => GD.RandRange(0, 1) == 0 ? -1 : 1);
-
 		Button[] cards = GetCards();
 
 		for (int i = 0; i < cards.Length; i++)
 		{
 			DisconnectCard(cards[i]);
-
 			if (i < available.Count)
 			{
-				//Mostrar carta con arma disponible
-				var weapon = available[i];
+				var w = available[i];
 				cards[i].Visible = true;
-				cards[i].Text =
-					$"{weapon.Name}\n" +
-					$"Daño:{weapon.Damage}  FR:{weapon.FireRate}s  " +
-					$"Pierce:{weapon.PierceCount}  Balas:{weapon.BulletsPerShot}";
-				cards[i].Pressed += () => SelectWeapon(weapon);
+				cards[i].Text    = $"{w.Name}\nDano:{w.Damage} FR:{w.FireRate}s Pierce:{w.PierceCount}";
+				cards[i].Pressed += () => SelectWeapon(w);
 			}
-			else
-			{
-				//Ocultar cartas sobrantes si hay menos de 3 armas disponibles
-				cards[i].Visible = false;
-			}
+			else cards[i].Visible = false;
 		}
 	}
 
 	private void SelectWeapon(WeaponData weapon)
 	{
 		_weaponManager.TryAddWeapon(weapon);
-		_ownedWeapons.Add(weapon.Name); //marcar como obtenida
+		_ownedWeapons.Add(weapon.Name);
 		Close();
 	}
 
-	// ─── Helpers ──────────────────────────────────────────────────────────────
+	// ── Mejoras por arma específica ───────────────────────────────────────
+	private void ShowWeaponUpgradeCards()
+	{
+		var activeWeapons = _weaponManager.GetActiveWeapons(); // devuelve List<WeaponData>
+		Button[] cards    = GetCards();
 
-	// Devuelve armas del pool que el jugador NO tiene aún
+		for (int i = 0; i < cards.Length; i++)
+		{
+			DisconnectCard(cards[i]);
+
+			if (i < activeWeapons.Count)
+			{
+				// Elegir un upgrade aleatorio para esta arma
+				var upgrades = WeaponLibrary.GetUpgradesForWeapon(activeWeapons[i]);
+				upgrades.Sort((a, b) => GD.RandRange(0, 1) == 0 ? -1 : 1);
+				var upgrade = upgrades[0];
+
+				var weaponRef = activeWeapons[i]; // capturar referencia
+
+				cards[i].Visible = true;
+				cards[i].Text    = $"{upgrade.Name}\n{upgrade.Description}";
+				cards[i].Pressed += () => { upgrade.Apply(weaponRef); Close(); };
+			}
+			else cards[i].Visible = false;
+		}
+	}
+
 	private List<WeaponData> GetAvailableWeapons()
 	{
-		var owned = _weaponManager.GetActiveWeaponNames();
+		var owned     = _weaponManager.GetActiveWeaponNames();
 		var available = new List<WeaponData>();
-
 		foreach (var w in _weaponPool)
-		{
 			if (!owned.Contains(w.Name) && !_ownedWeapons.Contains(w.Name))
 				available.Add(w);
-		}
 		return available;
 	}
 
@@ -166,9 +118,5 @@ public partial class LevelUpScreen : CanvasLayer
 			card.Disconnect("pressed", (Callable)conn["callable"]);
 	}
 
-	private void Close()
-	{
-		Visible = false;
-		GetTree().Paused = false;
-	}
+	private void Close() { Visible = false; GetTree().Paused = false; }
 }

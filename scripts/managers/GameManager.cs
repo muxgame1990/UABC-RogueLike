@@ -9,16 +9,17 @@ public partial class GameManager : Node
 	[Signal] public delegate void GameWonEventHandler();
 	[Signal] public delegate void LevelUpEventHandler();
 
-	public int CurrentLevel { get; set; } = 1;
-	public float CurrentXp { get; set; } = 0f;
-	public float XpToNextLevel { get; set; } = 100f;
-	public float ElapsedTime { get; set; } = 0f;
-	public float WinTime { get; } = 900f;
-	public int Coins {get; set; } = 0;
+	public int   CurrentLevel          { get; set; } = 1;
+	public float CurrentXp             { get; set; } = 0f;
+	public float XpToNextLevel         { get; set; } = 100f;
+	public float ElapsedTime           { get; set; } = 0f;
+	public float WinTime               { get; }       = 900f;
+	public int   Coins                 { get; set; } = 0;
 
-	public string SelectedCharacterScene { get; set; } = "res://scenes/player/cimarron_char.tscn";
-	public string DefaultWeaponScene {get; set; } = "res://scenes/weapons/pencil_weapon.tscn";
-	public int SelectedCharacterIndex { get; set; } = 0;
+	public string      SelectedCharacterScene { get; set; } = "res://scenes/player/cimarron_char.tscn";
+	public int         SelectedCharacterIndex { get; set; } = 0;
+	public int         SelectedClassIndex     { get; set; } = 0;
+	public PassiveType SelectedPassive        { get; set; } = PassiveType.None;
 
 	public override void _EnterTree() => Instance = this;
 
@@ -31,26 +32,24 @@ public partial class GameManager : Node
 
 	public void AddXp(float amount)
 	{
-		CurrentXp += amount;
+		CurrentXp += amount * 1f; // aquí se puede aplicar XpMultiplier del PlayerStats
 		if (CurrentXp >= XpToNextLevel)
 		{
-			CurrentXp -= XpToNextLevel;
+			CurrentXp     -= XpToNextLevel;
 			CurrentLevel++;
 			XpToNextLevel *= 1.2f;
 			EmitSignal(SignalName.LevelUp);
 		}
 	}
-	
-	public void AddCoins(int amount)
-	{
-		Coins += amount;
-	}
+
+	public void AddCoins(int amount) => Coins += amount;
 
 	public void ResetRun()
 	{
-		CurrentLevel = 1;
-		CurrentXp = 0f;
+		CurrentLevel  = 1;
+		CurrentXp     = 0f;
 		XpToNextLevel = 100f;
-		ElapsedTime = 0f;
+		ElapsedTime   = 0f;
+		Coins         = 0;
 	}
 }
