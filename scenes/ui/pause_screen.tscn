@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bq5sfajxnrl7"]
 
 [ext_resource type="Texture2D" uid="uid://b5baakggk36xm" path="res://sprites/GUI/Buttons/reanudarButtonAnim1.png" id="1_fvuwu"]
+[ext_resource type="Script" uid="uid://d0e3wm8n4ngok" path="res://scenes/ui/PauseScreen.cs" id="1_nxavn"]
 [ext_resource type="FontFile" uid="uid://ba85f4kd7f83f" path="res://sprites/GUI/Fonts/Peaberry-Font-v2.0/Peaberry Font Family/Peaberry Base/PeaberryBase.ttf" id="1_xceqw"]
 [ext_resource type="Texture2D" uid="uid://doksisntsn1wp" path="res://sprites/GUI/Buttons/reanudarButtonAnim2.png" id="2_xceqw"]
 
@@ -17,6 +18,7 @@ font = ExtResource("1_xceqw")
 font_size = 22
 
 [node name="PauseScreen" type="CanvasLayer" unique_id=342732342]
+script = ExtResource("1_nxavn")
 
 [node name="MainPanel" type="Panel" parent="." unique_id=125626244]
 anchors_preset = 15
@@ -130,5 +132,40 @@ texture_hover = ExtResource("2_xceqw")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=761272625]
-position = Vector2(576, 324)
+[node name="ConfigButton" type="TextureButton" parent="MainPanel" unique_id=689963943]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.319
+anchor_right = 0.5
+anchor_bottom = 0.319
+offset_left = -101.0
+offset_top = 43.287994
+offset_right = 101.25
+offset_bottom = 107.287994
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_fvuwu")
+texture_hover = ExtResource("2_xceqw")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="MainPanel" unique_id=1418911042]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.319
+anchor_right = 0.5
+anchor_bottom = 0.319
+offset_left = -100.875
+offset_top = 118.287994
+offset_right = 101.375
+offset_bottom = 182.288
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_fvuwu")
+texture_hover = ExtResource("2_xceqw")
+ignore_texture_size = true
+stretch_mode = 0

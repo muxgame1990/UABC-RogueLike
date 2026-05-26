@@ -35,17 +35,22 @@ public partial class OrbitalWeapon : Area2D
 		// Sincronizar tamaño con WeaponData cada frame
 		if (Data != null)
 			Scale = Vector2.One * Data.BulletScale * _player.Stats.SizeMultiplier;
-
-		_angle         += OrbitSpeed * (float)delta;
+		float baseAngle = GameManager.Instance.ElapsedTime * (OrbitSpeed * _player.Stats.AttackSpeedMultiplier);
+		float finalAngle = baseAngle + _angle;
+		//_angle         += OrbitSpeed * (float)delta;
 		GlobalPosition  = _player.GlobalPosition + new Vector2(
-			Mathf.Cos(_angle) * OrbitRadius,
-			Mathf.Sin(_angle) * OrbitRadius
+			Mathf.Cos(finalAngle) * OrbitRadius,
+			Mathf.Sin(finalAngle) * OrbitRadius
 		);
-		Rotation = _angle + Mathf.Pi / 2f;
+		Rotation = finalAngle + Mathf.Pi / 2f;
 
 		if (_damageTimer > 0f) _damageTimer -= (float)delta;
 	}
-
+	public void SetOrbitData(float angleOffset, float orbitRadious, WeaponData data){
+		_angle = angleOffset;
+		OrbitRadius = orbitRadious;
+		Data = data;
+	}
 	private void OnBodyEntered(Node2D body)
 	{
 		if (_damageTimer > 0f || !body.IsInGroup("enemies")) return;

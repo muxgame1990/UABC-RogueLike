@@ -21,17 +21,17 @@ public partial class GameOverScreen : CanvasLayer
 		_restartButton.Text = "Menu Principal";
 		_restartButton.Pressed += OnGoToMenu;
 		
-		GameManager.Instance.PlayerDied -= ShowGameOver;
-		GameManager.Instance.GameWon    -= ShowWin;
+		EventManager.Instance.PlayerDied -= ShowGameOver;
+		EventManager.Instance.GameWon    -= ShowWin;
 		
-		GameManager.Instance.PlayerDied += ShowGameOver;
-		GameManager.Instance.GameWon    += ShowWin;
+		EventManager.Instance.PlayerDied += ShowGameOver;
+		EventManager.Instance.GameWon    += ShowWin;
 	}
 	
 	public override void _ExitTree()
 	{
-		GameManager.Instance.PlayerDied -= ShowGameOver;
-		GameManager.Instance.GameWon    -= ShowWin;
+		EventManager.Instance.PlayerDied -= ShowGameOver;
+		EventManager.Instance.GameWon    -= ShowWin;
 	}
 	
 	private void ShowGameOver() => Show("GAME OVER");

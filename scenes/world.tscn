@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://7b1csv8cciq0" path="res://sprites/Terreno/spawnsign.png" id="6_q5onr"]
 [ext_resource type="PackedScene" uid="uid://drwax6c8a75dr" path="res://scenes/ui/game_over_screen.tscn" id="7_7r4gi"]
 [ext_resource type="Script" uid="uid://boxrbp50aolct" path="res://scripts/managers/WorldSpawner.cs" id="7_q5onr"]
+[ext_resource type="PackedScene" uid="uid://bq5sfajxnrl7" path="res://scenes/ui/pause_screen.tscn" id="11_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://chto80ec0cval" path="res://scenes/enemies/slime_enemy.tscn" id="13_jhx03"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jt3wm"]
@@ -113,7 +114,11 @@ script = ExtResource("7_q5onr")
 
 [node name="GameOverScreen" parent="." unique_id=565696738 instance=ExtResource("7_7r4gi")]
 
+[node name="PauseScreen" parent="." unique_id=342732342 instance=ExtResource("11_o8fc1")]
+process_mode = 3
+
 [node name="EnemySpawner" type="Node" parent="." unique_id=1548456630]
 script = ExtResource("4_k0juu")
 MeleeEnemies = Array[PackedScene]([ExtResource("3_71j4m")])
 RangedEnemies = Array[PackedScene]([ExtResource("13_jhx03")])
+BaseSpawnInterval = 0.2

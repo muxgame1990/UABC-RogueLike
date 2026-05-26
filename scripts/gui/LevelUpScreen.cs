@@ -11,17 +11,18 @@ public partial class LevelUpScreen : CanvasLayer
 	public override void _Ready()
 	{
 		ProcessMode = ProcessModeEnum.Always;
-		Visible     = false;
-		GameManager.Instance.LevelUp -= ShowLevelUpScreen;
-		GameManager.Instance.LevelUp += ShowLevelUpScreen;
+		Visible = false;
+		EventManager.Instance.LevelUp -= ShowLevelUpScreen;
+		EventManager.Instance.LevelUp += ShowLevelUpScreen;
+		//GameManager.Instance.LevelUp += ShowLevelUpScreen;
 	}
 
 	public override void _ExitTree()
 	{
-		GameManager.Instance.LevelUp -= ShowLevelUpScreen;
+		EventManager.Instance.LevelUp -= ShowLevelUpScreen;
 	}
 
-	private void ShowLevelUpScreen()
+	private void ShowLevelUpScreen(int level)
 	{
 		if (_player       == null) _player       = GetTree().GetFirstNodeInGroup("player") as Player;
 		if (_weaponManager == null) _weaponManager = _player?.GetNode<WeaponManager>("WeaponManager");

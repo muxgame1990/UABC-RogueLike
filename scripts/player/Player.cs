@@ -34,35 +34,65 @@ public partial class Player : CharacterBody2D
 	private float _walkTimer     = 0f;
 	private bool  _chargeActive  = false;
 	private float _chargeCooldown = 0f;
-
+	[Export] public int MaxDash = 2;
+	[Export] public float DashDistance = 120f;
+	[Export] public float DashDuration = 0.25f;
+	[Export] public float DashCooldown = 0.2f;
+	[Export] public float DashRecharge = 1.5f;
+	private Vector2 lastDirection = Vector2.Right;
+	private bool isDashing = false;
+	private int DashCount = 0;
+	private float DashTimer = 0f;
+	private float DashCooldownTimer = 0f;
+	private float DashRechargeTimer = 0f;
+	private Vector2 DashDirection = Vector2.Zero;
 	public override void _Ready()
 	{
 		int idx = GameManager.Instance.SelectedCharacterIndex;
-		float[] speeds = { 200f, 120f, 150f, 130f, 180f };
-		float[] maxHps = {  80f, 150f, 100f, 120f,  90f };
+		float[] speeds  = { 200f, 120f, 150f, 130f, 180f };
+		float[] maxHps  = {  80f, 150f, 100f, 120f,  90f };
+		DashCount = MaxDash;
 		if (idx < speeds.Length) Speed = speeds[idx];
 		if (idx < maxHps.Length) MaxHp = maxHps[idx];
-
+		CurrentHp = MaxHp;
 		_passive = GameManager.Instance.SelectedPassive;
 		ClassLibrary.ApplyPassiveStats(_passive, Stats);
-
 		//Speed se multiplica UNA vez aquí
 		Speed    *= Stats.MovementSpeedMult;
-		CurrentHp = MaxHp;
 		_sprite   = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		AddToGroup("player");
 	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		if (_isDead) return;
-
+		float dt = (float)delta;
+		if (DashCooldownTimer > 0)
+			DashCooldownTimer -= dt;
+		RechargeDash(dt);
+		if (isDashing)
+		{
+			DashTimer -= dt;
+			float DashSpeed = DashDistance / DashDuration;
+			Velocity = DashDirection * DashSpeed;
+			MoveAndSlide();
+			if (DashTimer <= 0)
+			{
+				isDashing = false;
+				Velocity = Vector2.Zero;
+			}
+			
+			return;
+		}
 		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		bool    isMoving  = direction != Vector2.Zero;
 
 		if (isMoving)
 		{
 			//Solo Speed — MovementSpeedMult ya fue aplicado en _Ready
+		if (direction != Vector2.Zero)
+		{
+			direction = direction.Normalized();
+			lastDirection = direction;
 			Velocity = direction * Speed;
 			_sprite.Play(AnimWalk);
 			if (direction.X != 0) _sprite.FlipH = direction.X < 0;
@@ -72,9 +102,13 @@ public partial class Player : CharacterBody2D
 			Velocity = Vector2.Zero;
 			_sprite.Play(AnimIdle);
 		}
-
+	if (Input.IsActionJustPressed("dash"))
+		{
+			Dash();
+		}
 		MoveAndSlide();
 		UpdatePassive((float)delta, isMoving);
+	}
 	}
 
 	private void UpdatePassive(float delta, bool isMoving)
@@ -128,7 +162,6 @@ public partial class Player : CharacterBody2D
 		if (Stats.HpRegen > 0f)
 			Heal(Stats.HpRegen * delta);
 	}
-
 	public void TakeDamage(float amount)
 	{
 		if (_isDead) return;
@@ -144,11 +177,11 @@ public partial class Player : CharacterBody2D
 			GD.Print("Marca de Sangre activada!");
 		}
 
+		if (isDashing) return;
 		CurrentHp -= amount;
 		CurrentHp  = Mathf.Clamp(CurrentHp, 0f, MaxHp);
 		if (CurrentHp <= 0f) Die();
 	}
-
 	public void Heal(float amount)
 	{
 		CurrentHp = Mathf.Clamp(CurrentHp + amount, 0f, MaxHp);
@@ -186,13 +219,44 @@ public partial class Player : CharacterBody2D
 				count++;
 		return count;
 	}
-
+	public void Dash(){
+	if (DashCooldownTimer > 0)
+	{
+		GD.Print("Dash en cooldown");
+		return;
+	}
+	if (DashCount <= 0)
+	{
+		GD.Print("Sin cargas de dash");
+		return;
+	}
+		
+		isDashing = true;
+		DashTimer = DashDuration;
+		DashCooldownTimer = DashCooldown;
+		DashDirection = lastDirection;
+		GD.Print("Dash hacia: " + DashDirection);
+		DashCount--;
+		GD.Print("Dash usado. Cargas restantes: " + DashCount);
+	}
 	private void Die()
 	{
 		_isDead = true;
-		GameManager.Instance.CallDeferred(
-			GodotObject.MethodName.EmitSignal,
-			GameManager.SignalName.PlayerDied
-		);
+		EventManager.Instance.EmitPlayerDied();
 	}
+	private void RechargeDash(float dt)
+{
+	if (DashCount >= MaxDash)
+	{
+		DashRechargeTimer = 0f;
+		return;
+	}
+	DashRechargeTimer += dt;
+	if (DashRechargeTimer >= DashRecharge)
+	{
+		DashCount++;
+		DashRechargeTimer = 0f;
+		GD.Print("Dash recargado. Cargas actuales: " + DashCount);
+	}
+}
 }
