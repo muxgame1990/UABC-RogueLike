@@ -39,7 +39,7 @@ public partial class ExpOrb : Area2D
 	{
 		if (body is Player player)
 		{
-			GameManager.Instance.AddXp(XpValue);
+			GameManager.Instance.AddXp(XpValue); //el + 500 no va
 			QueueFree();
 		}
 	}

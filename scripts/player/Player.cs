@@ -56,10 +56,24 @@ public partial class Player : CharacterBody2D
 		CurrentHp = MaxHp;
 		_passive = GameManager.Instance.SelectedPassive;
 		ClassLibrary.ApplyPassiveStats(_passive, Stats);
+		
 		//Speed se multiplica UNA vez aquí
 		Speed    *= Stats.MovementSpeedMult;
 		_sprite   = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		AddToGroup("player");
+		
+		//restaurar estado del jugador si viene de otra escena
+		if(GameManager.Instance.HasSavedState){
+			if (GameManager.Instance.SavedStats != null){
+				Stats = GameManager.Instance.SavedStats;
+			}
+			if (GameManager.Instance.SavedCurrentHp > 0f){
+				CurrentHp = Mathf.Min(
+					GameManager.Instance.SavedCurrentHp, MaxHp
+				);
+			}
+			PassiveDamageBonus = GameManager.Instance.SavedPassiveDamageBonus;
+		}
 	}
 	public override void _PhysicsProcess(double delta)
 	{

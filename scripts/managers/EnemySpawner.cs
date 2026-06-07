@@ -6,7 +6,7 @@ public partial class EnemySpawner : Node
 	[Export] public PackedScene[] MeleeEnemies;
 	[Export] public PackedScene[] RangedEnemies;
 	[Export] public float SpawnRadius       = 400f;
-	[Export] public float BaseSpawnInterval = 0.5f;
+	[Export] public float BaseSpawnInterval = 0.5f; //Normalmente es 2f
 	[Export] public float RangedSpawnChance = 0.3f;
 	[Export] public float waveDuration = 30f;
 	[Export] public float waveCooldown = 180f;
@@ -77,7 +77,7 @@ public partial class EnemySpawner : Node
 		if (chosenScene == null) return;
 
 		Vector2 spawnPosition = GetSpawnPosition();
-		float   scale         = 1f + GameManager.Instance.ElapsedTime / 120f;
+		float   scale         = 1f + GameManager.Instance.ElapsedTime / 280f; //120
 
 		if (spawnRanged)
 			SpawnRanged(chosenScene, spawnPosition, scale,isElite);

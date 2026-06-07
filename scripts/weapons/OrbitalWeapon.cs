@@ -4,6 +4,8 @@ public partial class OrbitalWeapon : Area2D
 {
 	[Export] public float OrbitRadius = 80f;
 	[Export] public float OrbitSpeed = 3f;
+	[Export] public float DamageCooldown = 0.05f; //0.1 original
+
 	public WeaponData Data;
 	protected Player Player;
 	protected float AngleOffset;

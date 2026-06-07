@@ -3,11 +3,11 @@ using System;
 
 public partial class Enemy : CharacterBody2D, IDamageable
 {
-	[Export] public float MaxHp = 30f;
-	[Export] public float Damage = 10f;
-	[Export] public float Speed = 60f;
-	[Export] public float DamageCooldown = 3f;
-	[Export] public float XpValue = 80f;
+	[Export] public float MaxHp = 30f; //30
+	[Export] public float Damage = 10f; //10
+	[Export] public float Speed = 60f; //60
+	[Export] public float DamageCooldown = 3f; //3
+	[Export] public float XpValue = 10f; //10
 	
 	//Drops
 	[Export] public PackedScene ExpOrbScene;
