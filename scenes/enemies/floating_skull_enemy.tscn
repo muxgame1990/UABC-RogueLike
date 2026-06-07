@@ -93,6 +93,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 6
 script = ExtResource("1_38ino")
+XpValue = 500.0
 ExpOrbScene = ExtResource("2_5atup")
 GoldCoinScene = ExtResource("3_gpuif")
 

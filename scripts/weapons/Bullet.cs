@@ -9,15 +9,12 @@ public partial class Bullet : Area2D
 	[Export] public float BulletScale = 1f;
 	[Export] public int   PierceCount = 1;
 	[Export] public int   BounceCount = 0;
-
 	//Evento que notifica al jugador cuánto daño hizo
 	public event Action<float> OnHit;
-
 	private Vector2      _direction;
 	private float        _lifeTimer  = 0f;
 	private int          _pierceLeft;
 	private int          _bounceLeft;
-
 	public override void _Ready()
 	{
 		_pierceLeft = PierceCount;
@@ -31,15 +28,23 @@ public partial class Bullet : Area2D
 		_direction = direction.Normalized();
 		Rotation   = _direction.Angle();
 	}
+	
+public override void _Process(double delta)
+{
+	BaseProcess(delta);
+}
 
-	public override void _Process(double delta)
-	{
-		GlobalPosition += _direction * Speed * (float)delta;
-		_lifeTimer     += (float)delta;
-		if (_lifeTimer >= Lifetime) QueueFree();
-	}
+protected virtual void BaseProcess(double delta)
+{
+	GlobalPosition += _direction * Speed * (float)delta;
 
-	private void OnBodyEntered(Node2D body)
+	_lifeTimer += (float)delta;
+
+	if (_lifeTimer >= Lifetime)
+		QueueFree();
+}
+
+	protected virtual void OnBodyEntered(Node2D body)
 	{
 		if (!body.IsInGroup("enemies")) return;
 
@@ -88,5 +93,9 @@ public partial class Bullet : Area2D
 			}
 		}
 		return nearest;
+	}
+	protected void TriggerHit(float damage)
+	{
+	OnHit?.Invoke(damage);
 	}
 }

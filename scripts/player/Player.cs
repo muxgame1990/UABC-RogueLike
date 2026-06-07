@@ -7,7 +7,6 @@ public partial class Player : CharacterBody2D
 	[Export] public float  MaxHp    = 100f;
 	[Export] public string AnimIdle = "idle";
 	[Export] public string AnimWalk = "walk";
-
 	public float       CurrentHp { get; private set; }
 	public PlayerStats Stats     { get; private set; } = new();
 
@@ -178,6 +177,10 @@ public partial class Player : CharacterBody2D
 		}
 
 		if (isDashing) return;
+if(ConsumeOrbitalShield())
+{
+	amount = 1f;
+}
 		CurrentHp -= amount;
 		CurrentHp  = Mathf.Clamp(CurrentHp, 0f, MaxHp);
 		if (CurrentHp <= 0f) Die();
@@ -258,5 +261,19 @@ public partial class Player : CharacterBody2D
 		DashRechargeTimer = 0f;
 		GD.Print("Dash recargado. Cargas actuales: " + DashCount);
 	}
+}
+private bool ConsumeOrbitalShield()
+{
+	foreach(Node node in GetTree().GetNodesInGroup("shields"))
+	{
+		if(node is ShieldOrbital shield &&
+		   shield.IsActive)
+		{
+			shield.ConsumeShield();
+			return true;
+		}
+	}
+
+	return false;
 }
 }

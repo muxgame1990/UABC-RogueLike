@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://boxrbp50aolct" path="res://scripts/managers/WorldSpawner.cs" id="7_q5onr"]
 [ext_resource type="PackedScene" uid="uid://bq5sfajxnrl7" path="res://scenes/ui/pause_screen.tscn" id="11_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://chto80ec0cval" path="res://scenes/enemies/slime_enemy.tscn" id="13_jhx03"]
+[ext_resource type="PackedScene" uid="uid://c4dgqqknn20pp" path="res://scenes/Interactivos/EnhanceTowers/LevelUpTower.tscn" id="15_xo05s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jt3wm"]
 texture = ExtResource("1_4wyf3")
@@ -122,3 +123,8 @@ script = ExtResource("4_k0juu")
 MeleeEnemies = Array[PackedScene]([ExtResource("3_71j4m")])
 RangedEnemies = Array[PackedScene]([ExtResource("13_jhx03")])
 BaseSpawnInterval = 0.2
+
+[node name="LevelUpTower" parent="." unique_id=98600160 instance=ExtResource("15_xo05s")]
+WaitTime = 1.0
+
+[editable path="LevelUpTower"]

@@ -1,67 +1,48 @@
-using System;
 using Godot;
 
 public partial class OrbitalWeapon : Area2D
 {
-	[Export] public float OrbitRadius   = 80f;
-	[Export] public float OrbitSpeed    = 3f;
-	[Export] public float DamageCooldown = 0.2f;
-
+	[Export] public float OrbitRadius = 80f;
+	[Export] public float OrbitSpeed = 3f;
 	public WeaponData Data;
-
-	private Player _player;
-	private float  _angle       = 0f;
-	private float  _damageTimer = 0f;
-
-	public override void _Ready()
+	protected Player Player;
+	protected float AngleOffset;
+	public virtual void Initialize(float startAngle, WeaponData data)
 	{
-		BodyEntered += OnBodyEntered;
-	}
-
-	public void Initialize(float startAngle, WeaponData data)
-	{
-		_angle = startAngle;
-		Data   = data;
-	}
-
-	public override void _Process(double delta)
-	{
-		if (_player == null)
-		{
-			_player = GetTree().GetFirstNodeInGroup("player") as Player;
-			return;
-		}
-
-		// Sincronizar tamaño con WeaponData cada frame
-		if (Data != null)
-			Scale = Vector2.One * Data.BulletScale * _player.Stats.SizeMultiplier;
-		float baseAngle = GameManager.Instance.ElapsedTime * (OrbitSpeed * _player.Stats.AttackSpeedMultiplier);
-		float finalAngle = baseAngle + _angle;
-		//_angle         += OrbitSpeed * (float)delta;
-		GlobalPosition  = _player.GlobalPosition + new Vector2(
-			Mathf.Cos(finalAngle) * OrbitRadius,
-			Mathf.Sin(finalAngle) * OrbitRadius
-		);
-		Rotation = finalAngle + Mathf.Pi / 2f;
-
-		if (_damageTimer > 0f) _damageTimer -= (float)delta;
-	}
-	public void SetOrbitData(float angleOffset, float orbitRadious, WeaponData data){
-		_angle = angleOffset;
-		OrbitRadius = orbitRadious;
+		AngleOffset = startAngle;
 		Data = data;
 	}
-	private void OnBodyEntered(Node2D body)
+	public virtual void SetOrbitData(
+		float angleOffset,
+		float orbitRadius,
+		WeaponData data)
 	{
-		if (_damageTimer > 0f || !body.IsInGroup("enemies")) return;
-
-		if (body is IDamageable damageable && Data != null)
+		AngleOffset = angleOffset;
+		OrbitRadius = orbitRadius;
+		Data = data;
+	}
+	public override void _Process(double delta)
+	{
+		if (Player == null)
 		{
-			//Leer daño actualizado de WeaponData
-			float dmg = Data.Damage * (_player?.Stats.DamageMultiplier ?? 1f)
-									* (_player?.PassiveDamageBonus    ?? 1f);
-			damageable.TakeDamage(dmg);
-			_damageTimer = DamageCooldown;
+			Player = GetTree().GetFirstNodeInGroup("player") as Player;
+			return;
 		}
+			Scale = Vector2.One * Data.BulletScale * Player.Stats.SizeMultiplier;
+		UpdateOrbit();
+	}
+	
+	protected virtual void UpdateOrbit()
+	{
+		float baseAngle = GameManager.Instance.ElapsedTime * (OrbitSpeed 
+		* Player.Stats.AttackSpeedMultiplier);
+		
+		float finalAngle = baseAngle + AngleOffset;
+		
+		GlobalPosition = Player.GlobalPosition +new Vector2( Mathf.Cos(finalAngle) 
+		* OrbitRadius,Mathf.Sin(finalAngle) 
+		* OrbitRadius);
+		
+		Rotation = finalAngle + Mathf.Pi / 2f;
 	}
 }

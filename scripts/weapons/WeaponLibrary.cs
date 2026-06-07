@@ -29,6 +29,13 @@ public static class WeaponLibrary
 		var magicBook    = Load("res://scenes/weapons/magic_book.tscn");
 		var ironSpear    = Load("res://scenes/weapons/iron_spear.tscn");
 		var axeWeapon    = Load("res://scenes/weapons/axe_weapon.tscn");
+		var lightning       = Load("res://scenes/weapons/lightning.tscn");
+		var meteor       = Load("res://scenes/weapons/meteor.tscn");
+		var laser       = Load("res://scenes/weapons/laser_orbital.tscn");
+		var shield       = Load("res://scenes/weapons/shield_orbital.tscn");
+		var fireWalker  = Load("res://scenes/weapons/fire_walker.tscn");
+		var fireBall  = Load("res://scenes/weapons/fire_ball.tscn"); 
+
 
 		return new List<WeaponData>
 		{
@@ -38,69 +45,134 @@ public static class WeaponLibrary
 				Damage=35f, Speed=0f, Lifetime=0.3f, FireRate=1.0f,
 				BulletScale=1.5f, PierceCount=10, BulletsPerShot=1,
 				SpawnOffset=40f,                        //aparece frente al jugador
-				BulletScene=longSword
+				BulletScene=longSword,
+				IconPath = "res://sprites/Sword.png"
 			},
 			new WeaponData {
 				Name="Arco", WeaponType="ranged",
 				Damage=25f, Speed=500f, Lifetime=3f, FireRate=1.0f,
 				BulletScale=0.9f, PierceCount=1, BulletsPerShot=1,
 				SpawnOffset=16f,
-				BulletScene=bow
+				BulletScene=bow,
+				IconPath = "res://sprites/Bow.png"
 			},
 			new WeaponData {
 				Name="Dagas", WeaponType="melee",
 				Damage=20f, Speed=0f, Lifetime=0.2f, FireRate=0.4f,
 				BulletScale=1.0f, PierceCount=10, BulletsPerShot=2,
 				SpawnOffset=35f,
-				BulletScene=dagger
+				IsOnEnemyWeapon=true,
+				BulletScene=dagger,
+				IconPath = "res://sprites/Dagger.png"
 			},
 			new WeaponData {
 				Name="Mazo", WeaponType="melee",
-				Damage=50f, Speed=0f, Lifetime=0.4f, FireRate=1.5f,
+				Damage=50f, Speed=0f, Lifetime=0.3f, FireRate=1.5f,
 				BulletScale=2.0f, PierceCount=10, BulletsPerShot=1,
 				SpawnOffset=45f,
-				BulletScene=mallet
+				BulletScene=mallet,
+				IconPath = "res://sprites/mace.png"
 			},
 			new WeaponData {
 				Name="Catalizador de Energia", WeaponType="magic",
 				Damage=30f, Speed=600f, Lifetime=4f, FireRate=0.6f,
 				BulletScale=0.8f, PierceCount=5, BulletsPerShot=1,
 				SpawnOffset=10f,
-				BulletScene=catalystBeam
+				BulletScene=catalystBeam,
+				IconPath = "res://sprites/Catalizador.png"
 			},
 			new WeaponData {
 				Name="Hacha de Acero", WeaponType="melee",
 				Damage=40f, Speed=0f, Lifetime=0f, FireRate=0f,
 				BulletScale=1.2f, PierceCount=0, BulletsPerShot=1,
 				IsOrbital=true,
-				BulletScene=ironAxe
+				BulletScene=ironAxe,
+				IconPath = "res://sprites/Battleaxe.png"
 			},
 			new WeaponData {
 				Name="Libro Magico", WeaponType="magic",
 				Damage=22f, Speed=250f, Lifetime=5f, FireRate=0.8f,
 				BulletScale=1.1f, PierceCount=1, BulletsPerShot=1,
 				BounceCount=3, SpawnOffset=10f,
-				BulletScene=magicBook
+				BulletScene=magicBook,
+				IconPath = "res://sprites/Magic_Tome.png"
+			},
+			new WeaponData {
+				Name="Fireball", WeaponType="magic",
+				Damage=22f, Speed=250f, Lifetime=5f, FireRate=0.8f,
+				BulletScale=1.1f, PierceCount=1, BulletsPerShot=1,
+				BounceCount=3, SpawnOffset=10f,
+				BulletScene=fireBall,
+				IconPath = "res://sprites/baculo_magico.png"
 			},
 			new WeaponData {
 				Name="Lanza de Acero", WeaponType="melee",
 				Damage=45f, Speed=0f, Lifetime=0.35f, FireRate=1.2f,
 				BulletScale=1.3f, PierceCount=10, BulletsPerShot=1,
 				SpawnOffset=50f,
-				BulletScene=ironSpear
+				BulletScene=ironSpear,
+				IconPath = "res://sprites/lance.png"
 			},
 			// ── Armas del pool (level up) ──────────────────────────────
+						new WeaponData {
+			Name="Lightning",
+			WeaponType="magic",
+			Damage=40f,
+			FireRate=0.8f,
+			BounceCount=1,
+			IsOnEnemyWeapon=true,
+			BulletScene=lightning,
+			IconPath = "res://sprites/Sword.png"
+			},
+			new WeaponData {
+			Name="Meteor",
+			WeaponType="magic",
+			Damage=40f,
+			FireRate=0.8f,
+			IsOnEnemyWeapon=true,
+			BulletScene=meteor,
+			IconPath = "res://sprites/Sword.png"
+			},
+			new WeaponData {
+			Name="Laser",
+			WeaponType="magic",
+			Damage=40f,
+			FireRate=0.8f,
+			IsOrbital=true,
+			BulletScene=laser,
+			IconPath = "res://sprites/Sword.png"
+			},
+			new WeaponData {
+			Name="Shield",
+			WeaponType="magic",
+			IsOrbital=true,
+			BulletScene=shield,
+			IconPath = "res://sprites/Sword.png"
+			},
+			new WeaponData {
+			Name="Fire Walker",
+			WeaponType="magic",
+			Damage=12f,
+			FireRate=0.4f,
+			Lifetime=3f,
+			IsZoneWeapon=true,
+			FollowPlayer=false,
+			BulletScene=fireWalker,
+			IconPath = "res://sprites/Sword.png"
+			},
 			new WeaponData {
 				Name="Lapiz", WeaponType="ranged",
 				Damage=15f, Speed=300f, Lifetime=2f, FireRate=0.6f,
 				BulletScale=1.0f, PierceCount=1, BulletsPerShot=3,
-				SpawnOffset=10f, BulletScene=pencil
+				SpawnOffset=10f, BulletScene=pencil,
+				IconPath = "res://sprites/Sword.png"
 			},
 			new WeaponData {
 				Name="Revolver", WeaponType="ranged",
 				Damage=60f, Speed=600f, Lifetime=4f, FireRate=1.5f,
 				BulletScale=1.0f, PierceCount=5, BulletsPerShot=1,
-				SpawnOffset=10f, BulletScene=revolver
+				SpawnOffset=10f, BulletScene=revolver,
+				IconPath = "res://sprites/Sword.png"
 			},
 			//new WeaponData {
 			//	Name="Hacha", WeaponType="melee",
@@ -112,7 +184,8 @@ public static class WeaponLibrary
 				Name="Hueso", WeaponType="ranged",
 				Damage=20f, Speed=100f, Lifetime=4f, FireRate=1.0f,
 				BulletScale=1.0f, PierceCount=1, BulletsPerShot=1,
-				SpawnOffset=10f, BulletScene=bone
+				SpawnOffset=10f, BulletScene=bone,
+				IconPath = "res://sprites/Sword.png"
 			},
 		};
 	}

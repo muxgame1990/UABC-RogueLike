@@ -4,7 +4,7 @@ using System;
 public partial class GameManager : Node
 {
 	public static GameManager Instance { get; private set; }
-
+	
 	//[Signal] public delegate void PlayerDiedEventHandler();
 	//[Signal] public delegate void GameWonEventHandler();
 	//[Signal] public delegate void LevelUpEventHandler();
@@ -19,7 +19,8 @@ public partial class GameManager : Node
 	public int         SelectedCharacterIndex { get; set; } = 0;
 	public int         SelectedClassIndex     { get; set; } = 0;
 	public PassiveType SelectedPassive        { get; set; } = PassiveType.None;
-
+	public float diffModifier = 1f;
+	public float eliteProbability = 0.3f;
 	public override void _EnterTree() => Instance = this;
 
 	public override void _Process(double delta)

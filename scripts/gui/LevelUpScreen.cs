@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class LevelUpScreen : CanvasLayer
 {
@@ -7,7 +8,10 @@ public partial class LevelUpScreen : CanvasLayer
 	private Player        _player;
 	private List<WeaponData>    _weaponPool;
 	private List<string>        _ownedWeapons = new();
-
+	public int reroll = 5;
+	public int skip = 5;
+	private Button skipButton;
+	private Button rerollButton;
 	public override void _Ready()
 	{
 		ProcessMode = ProcessModeEnum.Always;
@@ -15,27 +19,57 @@ public partial class LevelUpScreen : CanvasLayer
 		EventManager.Instance.LevelUp -= ShowLevelUpScreen;
 		EventManager.Instance.LevelUp += ShowLevelUpScreen;
 		//GameManager.Instance.LevelUp += ShowLevelUpScreen;
+		skipButton = GetNode<Button>("Panel/VBox/HBoxContainer/SkipButton");
+		skipButton.Pressed += Skip;
+		rerollButton = GetNode<Button>("Panel/VBox/HBoxContainer/RerollButton");
+		rerollButton.Pressed += Reroll;
+		UpdateButtons();
 	}
-
+	
+private void Reroll()
+{
+	if(reroll <= 0) return;
+	reroll--;
+	var available = GetAvailableWeapons();
+	bool canAddWeapon =
+		available.Count >= 1 &&
+		_weaponManager.WeaponCount < WeaponManager.MaxWeapons;
+	bool showWeapons =
+		canAddWeapon &&
+		GD.RandRange(0, 1) == 0;
+	if (showWeapons)
+		ShowWeaponCards(available);
+	else
+		ShowWeaponUpgradeCards();
+	UpdateButtons();
+}
 	public override void _ExitTree()
 	{
 		EventManager.Instance.LevelUp -= ShowLevelUpScreen;
 	}
-
+private void UpdateButtons()
+{
+	skipButton.Text = $"Skip ({skip})";
+	rerollButton.Text = $"Reroll ({reroll})";
+}
+	private void Skip(){
+		if(skip <= 0) return;
+		skip--;
+		UpdateButtons();
+		Close();
+	}
 	private void ShowLevelUpScreen(int level)
 	{
 		if (_player       == null) _player       = GetTree().GetFirstNodeInGroup("player") as Player;
 		if (_weaponManager == null) _weaponManager = _player?.GetNode<WeaponManager>("WeaponManager");
-
 		_weaponPool = WeaponLibrary.BuildAll();
-
 		Visible          = true;
 		GetTree().Paused = true;
-
 		var available = GetAvailableWeapons();
+		
 		bool canAddWeapon = available.Count >= 1 && _weaponManager.WeaponCount < WeaponManager.MaxWeapons;
 		bool showWeapons  = canAddWeapon && GD.RandRange(0, 1) == 0;
-
+		
 		if (showWeapons)
 			ShowWeaponCards(available);
 		else
@@ -45,9 +79,8 @@ public partial class LevelUpScreen : CanvasLayer
 	// ── Pool de armas nuevas ───────────────────────────────────────────────
 	private void ShowWeaponCards(List<WeaponData> available)
 	{
-		available.Sort((a, b) => GD.RandRange(0, 1) == 0 ? -1 : 1);
+		available = available.OrderBy(_ => GD.Randf()).ToList();
 		Button[] cards = GetCards();
-
 		for (int i = 0; i < cards.Length; i++)
 		{
 			DisconnectCard(cards[i]);
@@ -74,20 +107,20 @@ public partial class LevelUpScreen : CanvasLayer
 	{
 		var activeWeapons = _weaponManager.GetActiveWeapons(); // devuelve List<WeaponData>
 		Button[] cards    = GetCards();
-
+		
 		for (int i = 0; i < cards.Length; i++)
 		{
 			DisconnectCard(cards[i]);
-
+			
 			if (i < activeWeapons.Count)
 			{
 				// Elegir un upgrade aleatorio para esta arma
 				var upgrades = WeaponLibrary.GetUpgradesForWeapon(activeWeapons[i]);
 				upgrades.Sort((a, b) => GD.RandRange(0, 1) == 0 ? -1 : 1);
 				var upgrade = upgrades[0];
-
+				
 				var weaponRef = activeWeapons[i]; // capturar referencia
-
+				
 				cards[i].Visible = true;
 				cards[i].Text    = $"{upgrade.Name}\n{upgrade.Description}";
 				cards[i].Pressed += () => { upgrade.Apply(weaponRef); Close(); };
@@ -105,19 +138,16 @@ public partial class LevelUpScreen : CanvasLayer
 				available.Add(w);
 		return available;
 	}
-
 	private Button[] GetCards() => new Button[]
 	{
 		GetNode<Button>("Panel/VBox/UpgradeCard1"),
 		GetNode<Button>("Panel/VBox/UpgradeCard2"),
 		GetNode<Button>("Panel/VBox/UpgradeCard3"),
 	};
-
 	private void DisconnectCard(Button card)
 	{
 		foreach (var conn in card.GetSignalConnectionList("pressed"))
 			card.Disconnect("pressed", (Callable)conn["callable"]);
 	}
-
 	private void Close() { Visible = false; GetTree().Paused = false; }
 }

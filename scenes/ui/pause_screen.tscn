@@ -113,6 +113,11 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 490)
 layout_mode = 2
 
+[node name="StatsText" type="Label" parent="MainPanel/VBoxContainer/StatsPanel" unique_id=144077485]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="ReanudarButton" type="TextureButton" parent="MainPanel" unique_id=1978384481]
 texture_filter = 1
 layout_mode = 1

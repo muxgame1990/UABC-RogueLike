@@ -41,9 +41,9 @@ public partial class GameOverScreen : CanvasLayer
 	{
 		Visible = true;
 		GetTree().Paused = true;
-
+		
 		_titleLabel.Text = title;
-
+		
 		int seconds = (int)GameManager.Instance.ElapsedTime;
 		_timeLabel.Text  = $"Tiempo: {seconds / 60:D2}:{seconds % 60:D2}";
 		_levelLabel.Text = $"Nivel alcanzado: {GameManager.Instance.CurrentLevel}";

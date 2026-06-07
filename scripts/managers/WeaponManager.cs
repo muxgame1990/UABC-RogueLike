@@ -16,9 +16,13 @@ public class WeaponData
 	public int   BulletsPerShot = 1;
 	public float SpawnOffset    = 0;
 	public bool IsOrbital       = false;
+	public bool IsOnEnemyWeapon = false;
 	public int   BounceCount    = 0;
-
+	public bool IsZoneWeapon = false;
+	public bool FollowPlayer = false;
+	
 	public PackedScene BulletScene;
+	public string IconPath;
 }
 
 //Instancia activa de un arma (tiene su propio timer)
@@ -37,7 +41,7 @@ public partial class WeaponManager : Node
 {
 	[Export] public float DetectionRange = 200f;
 	[Export] public PackedScene DefaultBulletScene;
-	
+	private Dictionary<string, ZoneWeapon> _activeZones = new();
 	//|--------------------------------------|
 	public const int MaxWeapons = 3; // !!!  | valor original = 3
 	//|--------------------------------------|
@@ -88,6 +92,18 @@ public partial class WeaponManager : Node
 		PlayerStats stats = _player.Stats;
 		float attackSpeed = Mathf.Max(0.01f,stats.AttackSpeedMultiplier);
 		float finalFireRate = weapon.Data.FireRate / attackSpeed;
+		if(weapon.Data.IsZoneWeapon)
+		{
+			weapon.FireTimer += shootTime;
+			
+			if(weapon.FireTimer >= finalFireRate)
+			{
+			weapon.FireTimer = 0f;
+			
+			SpawnZoneWeapon(weapon.Data);
+		}
+		return;
+		}
 		if (weapon.BurstCooldownTimer > 0f)
 		{
 			weapon.BurstCooldownTimer -= shootTime;
@@ -104,10 +120,10 @@ public partial class WeaponManager : Node
 				}
 				weapon.shotsLeft--;
 				if(weapon.shotsLeft <= 0)
-{
-	weapon.isBursting = false;
-	weapon.BurstCooldownTimer = finalFireRate;
-}
+			{
+			weapon.isBursting = false;
+			weapon.BurstCooldownTimer = finalFireRate;
+			}
 				else{
 					weapon.betweenBulletsTimer = weapon.timeBetweenBullets;
 				}
@@ -121,6 +137,40 @@ public partial class WeaponManager : Node
 			Burst(weapon,finalFireRate);
 		}
 	}
+	private void SpawnZoneWeapon(WeaponData data)
+	{
+		if(data.BulletScene == null)
+		return;
+		if(data.FollowPlayer)
+		{
+			if(_activeZones.ContainsKey(data.Name))
+			return;
+		}
+			PlayerStats stats = _player.Stats;
+			float finalDamage =data.Damage *stats.DamageMultiplier *_player.PassiveDamageBonus;
+			
+		if(data.WeaponType == "magic")
+			finalDamage *= (1f + stats.MagicDamageBonus);
+			
+		float finalScale = data.BulletScale * stats.SizeMultiplier;
+		var zone =data.BulletScene.Instantiate<ZoneWeapon>();
+		zone.Initialize(data);
+		zone.FinalScale = finalScale;
+		zone.FinalDamage = finalDamage;
+		zone.GlobalPosition = _player.GlobalPosition;
+		_player.GetParent().AddChild(zone);
+		
+		if(data.FollowPlayer)
+		{
+		if(_activeZones.TryGetValue(data.Name, out var existing))
+		{
+			if(GodotObject.IsInstanceValid(existing))
+			return;
+			
+		_activeZones.Remove(data.Name);
+	}
+	}
+}
 	private void Burst(WeaponInstance weapon, float finalFireRate){
 		PlayerStats stats = _player.Stats;
 		int totalBullets = weapon.Data.BulletsPerShot + stats.BonusProjectiles;
@@ -129,7 +179,7 @@ public partial class WeaponManager : Node
 		weapon.shotsLeft = totalBullets;
 		weapon.timeBetweenBullets = finalFireRate;
 		weapon.timeBetweenBullets =
-	Mathf.Max(0.03f, (finalFireRate * 0.35f) / totalBullets);
+		Mathf.Max(0.03f, (finalFireRate * 0.35f) / totalBullets);
 		weapon.betweenBulletsTimer = 0f;
 	}
 	private void Shoot(WeaponData data, Node2D target)
@@ -142,7 +192,7 @@ public partial class WeaponManager : Node
 		if (data.WeaponType == "ranged") finalDamage *= (1f + stats.RangedDamageBonus);
 		if (data.WeaponType == "magic")  finalDamage *= (1f + stats.MagicDamageBonus);
 		if (_player.IsChargeActive())    { finalDamage *= 1.3f; _player.ConsumeCharge(); }
-
+		
 		int   finalBullets  = data.BulletsPerShot + stats.BonusProjectiles;
 		float finalSpeed    = data.Speed          * stats.ProjectileSpeedMult;
 		float finalScale    = data.BulletScale    * stats.SizeMultiplier;
@@ -159,10 +209,41 @@ public partial class WeaponManager : Node
 				finalDir = direction.Rotated(offset);
 			}
 		*/
-
+		
 			PackedScene scene = data.BulletScene ?? DefaultBulletScene;
 			if (scene == null) return;
-
+		if(data.IsOnEnemyWeapon)
+		{
+			var spell = scene.Instantiate<OnEnemyWeapon>();
+			
+			spell.Initialize(target);
+			
+			spell.Damage = finalDamage;
+			spell.BulletScale = finalScale;
+			spell.duration = data.Lifetime;
+			if(spell is Lightning lightning)
+			{
+			lightning.MaxJumps = 1 + finalBounce;
+		}
+		_player.GetParent().AddChild(spell);
+		return;
+	}
+		if(scene.CanInstantiate())
+		{
+		Node instance = scene.Instantiate();
+		
+		if(instance is MeleeWeapon melee)
+		{
+			melee.Damage = finalDamage;
+			melee.BulletScale = finalScale;
+			melee.Lifetime = data.Lifetime;
+			melee.GlobalPosition = _player.GlobalPosition + direction * data.SpawnOffset;
+			melee.Rotation = direction.Angle();
+			_player.GetParent().AddChild(melee);
+			
+		return;
+		}
+}
 			Bullet bullet      = scene.Instantiate<Bullet>();
 			bullet.Damage      = finalDamage;
 			bullet.Speed       = finalSpeed;
@@ -170,11 +251,11 @@ public partial class WeaponManager : Node
 			bullet.BulletScale = finalScale;
 			bullet.PierceCount = finalPierce;
 			bullet.BounceCount = finalBounce;
-
+			
 			_player.GetParent().AddChild(bullet);
 			bullet.GlobalPosition = _player.GlobalPosition + direction * data.SpawnOffset;
 			bullet.Initialize(direction);
-
+			
 			bullet.OnHit += (dmg) => _player.OnDamageDealt(dmg);
 		
 	}
@@ -187,7 +268,7 @@ public partial class WeaponManager : Node
 		
 		if (data.IsOrbital)
 			SpawnOrbital(data);
-		
+		EventManager.Instance.EmitWeaponEquipped(data);
 		return true;
 	}
 
@@ -286,6 +367,8 @@ public partial class WeaponManager : Node
 			if(GodotObject.IsInstanceValid(list[i]))
 			{
 				list[i].SetOrbitData(angleOffset,radious,data);
+				if(list[i] is ShieldOrbital shield)
+				shield.ShieldIndex = i;
 			}
 		}
 	}

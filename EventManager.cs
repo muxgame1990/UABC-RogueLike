@@ -11,6 +11,8 @@ public partial class EventManager : Node
 	[Signal] public delegate void XpChangedEventHandler(float xp, float xpToNextLevel);
 	[Signal] public delegate void GameWonEventHandler();
 	[Signal] public delegate void GamePausedEventHandler();
+	[Signal] public delegate void WeaponEquippedEventHandler(string weaponName);
+	
 	public override void _EnterTree()
 	{
 		Instance = this;
@@ -43,5 +45,9 @@ public partial class EventManager : Node
 	public void EmitXpChanged(float xp, float xpToNextLevel){
 		EmitSignal(SignalName.XpChanged,xp,xpToNextLevel);
 		GD.Print("Se llama evento de experiencia");
+	}
+	public void EmitWeaponEquipped(WeaponData weapon){
+		GD.Print("Se llama evento de equipar arma: " + weapon.Name);
+		EmitSignal(SignalName.WeaponEquipped, weapon.Name);
 	}
 }

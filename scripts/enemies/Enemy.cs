@@ -7,7 +7,7 @@ public partial class Enemy : CharacterBody2D, IDamageable
 	[Export] public float Damage = 10f;
 	[Export] public float Speed = 60f;
 	[Export] public float DamageCooldown = 3f;
-	[Export] public float XpValue = 10f;
+	[Export] public float XpValue = 80f;
 	
 	//Drops
 	[Export] public PackedScene ExpOrbScene;

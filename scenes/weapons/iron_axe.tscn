@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bbruqum21xmso"]
 
-[ext_resource type="Script" uid="uid://djcqwe0xrpkku" path="res://scripts/weapons/OrbitalWeapon.cs" id="1_ivs2m"]
+[ext_resource type="Script" uid="uid://j4o5dllfbn2i" path="res://scripts/weapons/AxeOrbital.cs" id="1_ivs2m"]
 [ext_resource type="Texture2D" uid="uid://bnct8fmd52wav" path="res://sprites/Armas/AxeAttack.png" id="2_ivs2m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_voqhg"]

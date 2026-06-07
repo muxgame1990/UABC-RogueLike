@@ -3,7 +3,7 @@ using System;
 
 public partial class ExpOrb : Area2D
 {
-	[Export] public float XpValue      = 10f;  //!!! Valor original = 10
+	[Export] public float XpValue      = 70f;  //!!! Valor original = 10
 	[Export] public float MagnetRange  = 80f;  // distancia a la que se atrae al jugador
 	[Export] public float MagnetSpeed  = 200f; // velocidad de atracción
 

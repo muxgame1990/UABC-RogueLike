@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yc5872jasnhp"]
 
-[ext_resource type="Script" uid="uid://betje8hbngl27" path="res://scripts/weapons/Bullet.cs" id="1_40j7y"]
+[ext_resource type="Script" uid="uid://da8wgnmjgy3o3" path="res://scripts/weapons/MeleeWeapon.cs" id="1_40j7y"]
 [ext_resource type="Texture2D" uid="uid://c8uvyeyhtd4wr" path="res://sprites/Armas/Slash.png" id="2_40j7y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_40j7y"]
@@ -81,7 +81,7 @@ position = Vector2(-1.6648927, -1.3351066)
 scale = Vector2(1.5415559, 1.2290559)
 sprite_frames = SubResource("SpriteFrames_4bmwa")
 autoplay = "default"
-frame_progress = 0.8341512
+frame_progress = 0.77693635
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=741951445]
 shape = SubResource("CircleShape2D_7kvn1")

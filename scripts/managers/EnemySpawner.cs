@@ -5,11 +5,14 @@ public partial class EnemySpawner : Node
 {
 	[Export] public PackedScene[] MeleeEnemies;
 	[Export] public PackedScene[] RangedEnemies;
-
 	[Export] public float SpawnRadius       = 400f;
-	[Export] public float BaseSpawnInterval = 2f;
+	[Export] public float BaseSpawnInterval = 0.5f;
 	[Export] public float RangedSpawnChance = 0.3f;
-
+	[Export] public float waveDuration = 30f;
+	[Export] public float waveCooldown = 180f;
+	[Export] public float waveSpawnInterval = 0.01f;
+	public bool isWaveActive = false;
+	public float waveTimer = 0f;
 	private float  _spawnTimer      = 0f;
 	private float  _currentInterval;
 	private Player _player;
@@ -27,9 +30,30 @@ public partial class EnemySpawner : Node
 			_player = GetTree().GetFirstNodeInGroup("player") as Player;
 			return;
 		}
-
 		_spawnTimer += (float)delta;
-		_currentInterval = Mathf.Max(0.3f, BaseSpawnInterval - GameManager.Instance.ElapsedTime / 180f);
+		waveTimer += (float)delta;
+		if(!isWaveActive)
+		{
+			if(waveTimer >= waveCooldown)
+			{
+				isWaveActive = true;
+				waveTimer = 0f;
+				GD.Print("Iniciamo la oleada");
+			}
+		}
+		else
+		{
+			if(waveTimer >= waveDuration)
+			{
+				isWaveActive = false;
+				waveTimer = 0f;
+				GD.Print("Acaba la oleada");
+			}
+		}
+		float timeFactor = GameManager.Instance.ElapsedTime / 180f;
+		float diffFactor = GameManager.Instance.diffModifier;
+		float normalInterval = Mathf.Max(0.2f, BaseSpawnInterval - (timeFactor * diffFactor));
+		_currentInterval = isWaveActive ? waveSpawnInterval : normalInterval;
 
 		if (_spawnTimer >= _currentInterval)
 		{
@@ -40,6 +64,7 @@ public partial class EnemySpawner : Node
 
 	private void SpawnEnemy()
 	{
+		bool isElite = GD.Randf() < GameManager.Instance.eliteProbability;
 		bool spawnRanged = RangedEnemies != null
 						   && RangedEnemies.Length > 0
 						   && GD.Randf() < RangedSpawnChance;
@@ -55,27 +80,43 @@ public partial class EnemySpawner : Node
 		float   scale         = 1f + GameManager.Instance.ElapsedTime / 120f;
 
 		if (spawnRanged)
-			SpawnRanged(chosenScene, spawnPosition, scale);
+			SpawnRanged(chosenScene, spawnPosition, scale,isElite);
 		else
-			SpawnMelee(chosenScene, spawnPosition, scale);
+			SpawnMelee(chosenScene, spawnPosition, scale,isElite);
 	}
 
-	private void SpawnMelee(PackedScene scene, Vector2 position, float scale)
+	private void SpawnMelee(PackedScene scene, Vector2 position, float scale,bool isElite)
 	{
 		Enemy enemy  = scene.Instantiate<Enemy>();
-		enemy.MaxHp  *= scale;
-		enemy.Speed  *= Mathf.Min(scale, 2f);
-		enemy.Damage *= scale;
+		float eliteMultiplier = isElite ? 3.0f : 1.0f;
+		float scaleMultiplier = scale * GameManager.Instance.diffModifier * eliteMultiplier;
+		enemy.MaxHp  *= scaleMultiplier;
+		enemy.Speed  *= Mathf.Min(scaleMultiplier, 2f);
+		enemy.Damage *= scaleMultiplier;
+		if (isElite)
+			{
+				enemy.Modulate = new Color(1, 0, 0);
+				enemy.Scale *= 2f;
+				enemy.XpValue *= 3;
+			}
 		_player.GetParent().AddChild(enemy);
 		enemy.GlobalPosition = position;
 	}
 
-	private void SpawnRanged(PackedScene scene, Vector2 position, float scale)
+	private void SpawnRanged(PackedScene scene, Vector2 position, float scale, bool isElite)
 	{
 		RangedEnemy enemy = scene.Instantiate<RangedEnemy>();
-		enemy.MaxHp       *= scale;
-		enemy.Speed       *= Mathf.Min(scale, 2f);
-		enemy.Damage      *= scale;
+		float eliteMultiplier = isElite ? 1.5f : 1.0f;
+		float scaleMultiplier = scale * GameManager.Instance.diffModifier * eliteMultiplier;
+		enemy.MaxHp       *= scaleMultiplier;
+		enemy.Speed       *= Mathf.Min(scaleMultiplier, 2f);
+		enemy.Damage      *= scaleMultiplier;
+			if (isElite)
+			{
+				enemy.Modulate = new Color(1, 0, 0);
+				enemy.Scale *= 2f;
+				enemy.XpValue *= 3;
+			}
 		_player.GetParent().AddChild(enemy);
 		enemy.GlobalPosition = position;
 	}
