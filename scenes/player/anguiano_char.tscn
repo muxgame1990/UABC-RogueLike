@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://dhdxkt4hymkud" path="res://scripts/player/Player.cs" id="1_rw8dh"]
 [ext_resource type="Script" uid="uid://tw54rtej0h70" path="res://scripts/managers/WeaponManager.cs" id="2_rw8dh"]
 [ext_resource type="Script" uid="uid://gwkm1pdpvtbd" path="res://scripts/managers/XpManger.cs" id="4_kj8pg"]
+[ext_resource type="PackedScene" uid="uid://bkporllhh3hq4" path="res://scenes/ui/hud.tscn" id="5_umrhh"]
+[ext_resource type="PackedScene" uid="uid://cdu85o7oydgvl" path="res://scenes/ui/level_up_screen.tscn" id="6_tw2g2"]
+[ext_resource type="PackedScene" uid="uid://drwax6c8a75dr" path="res://scenes/ui/game_over_screen.tscn" id="7_tkis8"]
+[ext_resource type="PackedScene" uid="uid://bq5sfajxnrl7" path="res://scenes/ui/pause_screen.tscn" id="8_pkqly"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_umrhh"]
 atlas = ExtResource("1_1iinc")
@@ -86,3 +90,12 @@ script = ExtResource("2_rw8dh")
 
 [node name="XpManger" type="Node" parent="." unique_id=1302557815]
 script = ExtResource("4_kj8pg")
+
+[node name="Hud" parent="." unique_id=263779862 instance=ExtResource("5_umrhh")]
+
+[node name="LevelUpScreen" parent="." unique_id=699232108 instance=ExtResource("6_tw2g2")]
+
+[node name="GameOverScreen" parent="." unique_id=565696738 instance=ExtResource("7_tkis8")]
+
+[node name="PauseScreen" parent="." unique_id=342732342 instance=ExtResource("8_pkqly")]
+process_mode = 3

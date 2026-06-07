@@ -106,6 +106,6 @@ public partial class ClassSelect : Control
 		GameManager.Instance.SelectedClassIndex = _selectedIndex;
 		GameManager.Instance.SelectedPassive    = cls.Passive;
 		GameManager.Instance.ResetRun();
-		GetTree().ChangeSceneToFile("res://scenes/world.tscn");
+		GetTree().ChangeSceneToFile("res://scenes/mapas/forest_map.tscn");
 	}
 }

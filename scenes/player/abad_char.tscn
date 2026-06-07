@@ -3,7 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://dh5bb5lb5wi0v" path="res://sprites/Personajes/Abad_anim.png" id="1_m6kvd"]
 [ext_resource type="Script" uid="uid://dhdxkt4hymkud" path="res://scripts/player/Player.cs" id="1_spabk"]
 [ext_resource type="Script" uid="uid://tw54rtej0h70" path="res://scripts/managers/WeaponManager.cs" id="3_uq4v0"]
+[ext_resource type="PackedScene" uid="uid://bkporllhh3hq4" path="res://scenes/ui/hud.tscn" id="5_077ra"]
 [ext_resource type="Script" uid="uid://gwkm1pdpvtbd" path="res://scripts/managers/XpManger.cs" id="5_x3337"]
+[ext_resource type="PackedScene" uid="uid://cdu85o7oydgvl" path="res://scenes/ui/level_up_screen.tscn" id="6_ob2il"]
+[ext_resource type="PackedScene" uid="uid://drwax6c8a75dr" path="res://scenes/ui/game_over_screen.tscn" id="7_rk808"]
+[ext_resource type="PackedScene" uid="uid://bq5sfajxnrl7" path="res://scenes/ui/pause_screen.tscn" id="8_sc5dt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbjox"]
 atlas = ExtResource("1_m6kvd")
@@ -86,3 +90,12 @@ script = ExtResource("3_uq4v0")
 
 [node name="XpManger" type="Node" parent="." unique_id=1308695509]
 script = ExtResource("5_x3337")
+
+[node name="Hud" parent="." unique_id=263779862 instance=ExtResource("5_077ra")]
+
+[node name="LevelUpScreen" parent="." unique_id=699232108 instance=ExtResource("6_ob2il")]
+
+[node name="GameOverScreen" parent="." unique_id=565696738 instance=ExtResource("7_rk808")]
+
+[node name="PauseScreen" parent="." unique_id=342732342 instance=ExtResource("8_sc5dt")]
+process_mode = 3

@@ -7,7 +7,7 @@ public partial class EnemySpawner : Node
 	[Export] public PackedScene[] RangedEnemies;
 
 	[Export] public float SpawnRadius       = 400f;
-	[Export] public float BaseSpawnInterval = 2f;
+	[Export] public float BaseSpawnInterval = 2f; // original 2
 	[Export] public float RangedSpawnChance = 0.3f;
 
 	private float  _spawnTimer      = 0f;
@@ -29,7 +29,7 @@ public partial class EnemySpawner : Node
 		}
 
 		_spawnTimer += (float)delta;
-		_currentInterval = Mathf.Max(0.3f, BaseSpawnInterval - GameManager.Instance.ElapsedTime / 180f);
+		_currentInterval = Mathf.Max(0.3f, BaseSpawnInterval - GameManager.Instance.ElapsedTime / 180f); //180
 
 		if (_spawnTimer >= _currentInterval)
 		{
@@ -52,7 +52,7 @@ public partial class EnemySpawner : Node
 		if (chosenScene == null) return;
 
 		Vector2 spawnPosition = GetSpawnPosition();
-		float   scale         = 1f + GameManager.Instance.ElapsedTime / 120f;
+		float   scale         = 1f + GameManager.Instance.ElapsedTime / 280f; //120
 
 		if (spawnRanged)
 			SpawnRanged(chosenScene, spawnPosition, scale);

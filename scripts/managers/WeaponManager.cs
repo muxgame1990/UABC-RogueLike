@@ -296,6 +296,16 @@ public partial class WeaponManager : Node
 	
 	private void InitStartWeapon()
 	{
+		//si hay estado guardado, restaurar armas con mejoras
+		if (GameManager.Instance.HasSavedState
+		&& GameManager.Instance.SavedWeapons != null
+		&& GameManager.Instance.SavedWeapons.Count > 0)
+		{
+			foreach (WeaponData weapon in GameManager.Instance.SavedWeapons)
+				TryAddWeapon(weapon);
+			return;
+		}
+		//sino solo el arma inicial de la clase
 		if (_pendingStartWeapon != null)
 			TryAddWeapon(_pendingStartWeapon);
 	}
