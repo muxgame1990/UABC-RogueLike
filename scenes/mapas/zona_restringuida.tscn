@@ -15,6 +15,8 @@ size = Vector2(369.5, 279)
 size = Vector2(461, 275)
 
 [node name="ZonaRestringuida" type="Area2D" unique_id=1316069723]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_jbmf1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1280419991]

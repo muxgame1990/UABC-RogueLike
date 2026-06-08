@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 public partial class AreaTransicion : Area2D
 {
 	[Export] public string RutaEscena = "res://scenes/mapas/forest_map_2.tscn";
-
+	[Export] public int targetMapLevel = 1;
 	private ColorRect fade;
 	private bool _transitioning = false;
 
@@ -24,6 +24,7 @@ public partial class AreaTransicion : Area2D
 		if (body is Player player)
 			GameManager.Instance.SavePlayerState(player);
 		
+		GameManager.Instance.Transition(targetMapLevel);
 		Tween tween = CreateTween();
 		tween.TweenProperty(fade, "modulate:a", 1.0f, 1.0f);
 		await ToSignal(tween, Tween.SignalName.Finished);

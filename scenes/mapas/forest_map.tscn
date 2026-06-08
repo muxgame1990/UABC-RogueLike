@@ -2,14 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://bv7t6h88vunrl" path="res://sprites/tutorial/exterior.png" id="1_2u2jk"]
 [ext_resource type="Texture2D" uid="uid://4mvo8v7ywnp3" path="res://sprites/tutorial/text_image-removebg-preview.png" id="1_fcca1"]
-[ext_resource type="PackedScene" path="res://scenes/mapas/zona_restringuida.tscn" id="1_if6gs"]
+[ext_resource type="PackedScene" uid="uid://dye3g46kirgj0" path="res://scenes/mapas/zona_restringuida.tscn" id="1_if6gs"]
 [ext_resource type="Texture2D" uid="uid://cj2uqhwgflfpo" path="res://sprites/tutorial/Smoke_animation.png" id="2_0n05s"]
 [ext_resource type="Texture2D" uid="uid://pqpt6enkag4w" path="res://sprites/tutorial/cat_animation.png" id="3_lebpl"]
 [ext_resource type="Texture2D" uid="uid://b3xip734kd45e" path="res://sprites/tutorial/ground_grass_details.png" id="4_ulfcs"]
-[ext_resource type="PackedScene" path="res://scenes/npcs/SignText.tscn" id="6_ulfcs"]
-[ext_resource type="PackedScene" path="res://scenes/npcs/npc_knight.tscn" id="9_n8jng"]
+[ext_resource type="PackedScene" uid="uid://vll20qashssy" path="res://scenes/npcs/SignText.tscn" id="6_ulfcs"]
+[ext_resource type="PackedScene" uid="uid://cs7nlha8efqi3" path="res://scenes/npcs/npc_knight.tscn" id="9_n8jng"]
 [ext_resource type="Script" uid="uid://uk6d8jm4dnje" path="res://scripts/dialogosNPCs/DialogoNPC.cs" id="10_odua7"]
-[ext_resource type="PackedScene" path="res://scenes/mapas/zona_restringuida_frontal.tscn" id="11_odua7"]
+[ext_resource type="PackedScene" uid="uid://c1nvnyleep0gq" path="res://scenes/mapas/zona_restringuida_frontal.tscn" id="11_odua7"]
 [ext_resource type="AudioStream" uid="uid://bmer4j1oqdlts" path="res://sprites/music/tutoMusic.mp3" id="12_tltx5"]
 [ext_resource type="Script" uid="uid://boxrbp50aolct" path="res://scripts/managers/WorldSpawner.cs" id="13_dgeat"]
 [ext_resource type="Script" uid="uid://ckykmhws0iixd" path="res://scripts/areaTransicion/AreaTransicion.cs" id="13_n0wfb"]
@@ -3267,7 +3267,19 @@ radius = 30.413813
 size = Vector2(126, 91)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tltx5"]
-size = Vector2(464, 829)
+size = Vector2(113, 1523)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgeat"]
+size = Vector2(3430.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccmkw"]
+size = Vector2(21, 1676.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1qaq"]
+size = Vector2(3397.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0oqs"]
+size = Vector2(17, 1602.5)
 
 [node name="ForestMap" type="Node2D" unique_id=896372314]
 position = Vector2(-497, -434)
@@ -3340,6 +3352,8 @@ tile_set = SubResource("TileSet_5cegd")
 
 [node name="SignHouse" parent="." unique_id=266035313 instance=ExtResource("6_ulfcs")]
 position = Vector2(534, 447)
+collision_layer = 7
+collision_mask = 7
 
 [node name="NPC_Knight" parent="." unique_id=1060573854 instance=ExtResource("9_n8jng")]
 texture_filter = 1
@@ -3354,14 +3368,22 @@ shape = SubResource("CircleShape2D_n8jng")
 [node name="ZonaRestringuida2" parent="." unique_id=1112126316 instance=ExtResource("1_if6gs")]
 position = Vector2(1166, 1086)
 rotation = 3.1415927
+collision_layer = 4
+collision_mask = 1
+
+[node name="CollisionShape2D" parent="ZonaRestringuida2" index="0" unique_id=1280419991]
+position = Vector2(347.99997, -174.00006)
 
 [node name="ZonaRestringuida" parent="." unique_id=1316069723 instance=ExtResource("1_if6gs")]
-position = Vector2(275, 14)
+position = Vector2(321, -233)
+collision_layer = 4
+collision_mask = 1
 
 [node name="ZonaRestringuidaFrontal" parent="." unique_id=1314168352 instance=ExtResource("11_odua7")]
-position = Vector2(-626, 680.00006)
+position = Vector2(-774, 304.00006)
 rotation = 4.712389
 scale = Vector2(0.31999972, 0.6399994)
+collision_layer = 4
 
 [node name="CasaColision" type="Area2D" parent="." unique_id=1265385172]
 position = Vector2(477, 356.5)
@@ -3385,8 +3407,43 @@ position = Vector2(1834, 473)
 script = ExtResource("13_n0wfb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTransicion" unique_id=1439631177]
-position = Vector2(452, 80)
+position = Vector2(639.5, 81.5)
 shape = SubResource("RectangleShape2D_tltx5")
 
 [node name="WorldSpawner" type="Node" parent="." unique_id=2061981868]
 script = ExtResource("13_dgeat")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1117609449]
+position = Vector2(0, 269)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=439911627]
+position = Vector2(832.75, -480)
+shape = SubResource("RectangleShape2D_dgeat")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1007099313]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1333165696]
+position = Vector2(-871.5, 628.75)
+shape = SubResource("RectangleShape2D_ccmkw")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=582284423]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=654194388]
+position = Vector2(835.25, 1332)
+shape = SubResource("RectangleShape2D_x1qaq")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1561699220]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1006307702]
+position = Vector2(2527.5, 561.75)
+shape = SubResource("RectangleShape2D_h0oqs")
+
+[editable path="ZonaRestringuida2"]

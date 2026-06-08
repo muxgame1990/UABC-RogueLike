@@ -17,7 +17,7 @@ public partial class ZonaRestringuida : Area2D
 	{
 		GD.Print("SI HE ENTRADO");
 		string name = body.Name;
-		if (body.Name == name)
+		if (body.IsInGroup("player"))
 		{
 			mensaje.Visible = true;
 		}
@@ -26,7 +26,7 @@ public partial class ZonaRestringuida : Area2D
 	private void OnBodyExited(Node body)
 	{
 		string name = body.Name;
-		if (body.Name == name)
+		if (body.IsInGroup("player"))
 		{
 			mensaje.Visible = false;
 		}

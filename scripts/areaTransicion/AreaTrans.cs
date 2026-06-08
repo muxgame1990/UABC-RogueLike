@@ -4,17 +4,15 @@ using System.Threading.Tasks;
 public partial class AreaTrans : Area2D
 {
 	[Export] public string RutaEscena = "res://scenes/mapas/MapaFinal.tscn";
-
+	[Export] public int targetMapLevel = 3;
 	private ColorRect fade;
 	private bool      _transitioning = false;
 	
 	public override void _Ready()
 	{
 		GD.Print("AreaTransicion2 cargada");
-
 		fade = GetNode<ColorRect>("../CanvasLayer/ColorRect");
 		fade.Modulate = new Color(0, 0, 0, 0);
-
 		BodyEntered += OnBodyEntered;
 	}
 
@@ -29,6 +27,7 @@ public partial class AreaTrans : Area2D
 		if (body is Player player)
 			GameManager.Instance.SavePlayerState(player);
 		
+		GameManager.Instance.Transition(targetMapLevel);
 		GD.Print("Cambio de escena iniciado");
 
 		Tween tween = CreateTween();

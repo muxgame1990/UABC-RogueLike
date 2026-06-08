@@ -46,6 +46,10 @@ position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_dnlsi")
 
 [node name="SpriteDialogo" type="Sprite2D" parent="." unique_id=412614845]
+visible = false
+light_mask = 7
+visibility_layer = 15
+z_index = 10
 position = Vector2(-6.0000076, -52.999996)
 scale = Vector2(0.29172876, 0.3172043)
 texture = ExtResource("3_n0g0b")

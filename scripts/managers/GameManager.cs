@@ -18,6 +18,8 @@ public partial class GameManager : Node
 	public PassiveType SelectedPassive        { get; set; } = PassiveType.None;
 	public float diffModifier = 1f;
 	public float eliteProbability = 0.3f;
+	public int currentMapLevel {get; set; } = 0;
+	public bool isBossSpawned {get; set; } = false;
 	
 	//estado entre mapas
 	public List<WeaponData> SavedWeapons           { get; set; } = null;
@@ -30,11 +32,18 @@ public partial class GameManager : Node
 
 	public override void _Process(double delta)
 	{
+		//if(currentMapLevel > 0 && isBossSpawned){
 		ElapsedTime += (float)delta;
+		//}
 		if (ElapsedTime >= WinTime)
 			EventManager.Instance.EmitGameWon();
 	}
-	
+	public void Transition(int nextMapLevel){
+		currentMapLevel = nextMapLevel;
+		ElapsedTime = 0f;
+		isBossSpawned = false;
+		diffModifier *= 1.5f;
+	}
 	public void SavePlayerState(Player player){ //guardar estado del jugador
 		var weaponManager = player.GetNodeOrNull<WeaponManager>("WeaponManager");
 		if (weaponManager != null){

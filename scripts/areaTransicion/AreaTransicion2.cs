@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 public partial class AreaTransicion2 : Area2D
 {
 	[Export] public string RutaEscena = "res://scenes/mapas/cursed_map.tscn";
-
+	[Export] public int targetMapLevel = 2;
 	private ColorRect fade;
 	private bool      _transitioning = false;
 	
@@ -29,6 +29,7 @@ public partial class AreaTransicion2 : Area2D
 		if (body is Player player)
 			GameManager.Instance.SavePlayerState(player);
 		
+		GameManager.Instance.Transition(targetMapLevel);
 		GD.Print("Cambio de escena iniciado");
 
 		Tween tween = CreateTween();
