@@ -49,7 +49,7 @@ public partial class Player : CharacterBody2D
 	{
 		int idx = GameManager.Instance.SelectedCharacterIndex;
 		float[] speeds  = { 200f, 120f, 150f, 130f, 180f };
-		float[] maxHps  = {  80f, 150f, 100f, 120f,  90f };
+		float[] maxHps  = {  80f, 150f, 999999f, 120f,  90f };
 		DashCount = MaxDash;
 		if (idx < speeds.Length) Speed = speeds[idx];
 		if (idx < maxHps.Length) MaxHp = maxHps[idx];

@@ -37,10 +37,8 @@ public partial class Enemy : CharacterBody2D, IDamageable
 		//Seguimiento
 		Vector2 direction = (_player.GlobalPosition - GlobalPosition).Normalized();
 		Velocity = direction * Speed;
-
 		if (direction.X != 0)
 			_sprite.FlipH = direction.X < 0;
-
 		MoveAndSlide();
 		
 		float distanceToPlayer = GlobalPosition.DistanceTo(_player.GlobalPosition);
@@ -59,7 +57,7 @@ public partial class Enemy : CharacterBody2D, IDamageable
 			Die();
 	}
 	
-	public void Die()
+	public virtual void Die()
 	{
 		_isDead = true;
 		CallDeferred(nameof(SpawnDrops));

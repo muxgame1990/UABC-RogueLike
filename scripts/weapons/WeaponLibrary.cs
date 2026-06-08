@@ -50,7 +50,7 @@ public static class WeaponLibrary
 			},
 			new WeaponData {
 				Name="Arco", WeaponType="ranged",
-				Damage=25f, Speed=500f, Lifetime=3f, FireRate=1.0f,
+				Damage=35f, Speed=500f, Lifetime=3f, FireRate=1.0f,
 				BulletScale=0.9f, PierceCount=1, BulletsPerShot=1,
 				SpawnOffset=16f,
 				BulletScene=bow,
@@ -58,7 +58,7 @@ public static class WeaponLibrary
 			},
 			new WeaponData {
 				Name="Dagas", WeaponType="melee",
-				Damage=20f, Speed=0f, Lifetime=0.2f, FireRate=0.4f,
+				Damage=8f, Speed=0f, Lifetime=0.2f, FireRate=0.4f,
 				BulletScale=1.0f, PierceCount=10, BulletsPerShot=2,
 				SpawnOffset=35f,
 				IsOnEnemyWeapon=true,
@@ -75,7 +75,7 @@ public static class WeaponLibrary
 			},
 			new WeaponData {
 				Name="Catalizador de Energia", WeaponType="magic",
-				Damage=30f, Speed=600f, Lifetime=4f, FireRate=0.6f,
+				Damage=20f, Speed=600f, Lifetime=4f, FireRate=0.6f,
 				BulletScale=0.8f, PierceCount=5, BulletsPerShot=1,
 				SpawnOffset=10f,
 				BulletScene=catalystBeam,
@@ -107,17 +107,17 @@ public static class WeaponLibrary
 			},
 			new WeaponData {
 				Name="Lanza de Acero", WeaponType="melee",
-				Damage=45f, Speed=0f, Lifetime=0.35f, FireRate=1.2f,
+				Damage=35f, Speed=0f, Lifetime=0.35f, FireRate=1.2f,
 				BulletScale=1.3f, PierceCount=10, BulletsPerShot=1,
 				SpawnOffset=50f,
 				BulletScene=ironSpear,
 				IconPath = "res://sprites/lance.png"
 			},
 			// ── Armas del pool (level up) ──────────────────────────────
-						new WeaponData {
+			new WeaponData {
 			Name="Lightning",
 			WeaponType="magic",
-			Damage=40f,
+			Damage=30f,
 			FireRate=0.8f,
 			BounceCount=1,
 			IsOnEnemyWeapon=true,
@@ -127,7 +127,7 @@ public static class WeaponLibrary
 			new WeaponData {
 			Name="Meteor",
 			WeaponType="magic",
-			Damage=40f,
+			Damage=30f,
 			FireRate=0.8f,
 			IsOnEnemyWeapon=true,
 			BulletScene=meteor,
@@ -136,7 +136,7 @@ public static class WeaponLibrary
 			new WeaponData {
 			Name="Laser",
 			WeaponType="magic",
-			Damage=40f,
+			Damage=30f,
 			FireRate=0.8f,
 			IsOrbital=true,
 			BulletScene=laser,
@@ -162,7 +162,7 @@ public static class WeaponLibrary
 			},
 			new WeaponData {
 				Name="Lapiz", WeaponType="ranged",
-				Damage=15f, Speed=300f, Lifetime=2f, FireRate=0.6f,
+				Damage=8f, Speed=300f, Lifetime=2f, FireRate=0.6f,
 				BulletScale=1.0f, PierceCount=1, BulletsPerShot=3,
 				SpawnOffset=10f, BulletScene=pencil,
 				IconPath = "res://sprites/Sword.png"
@@ -182,7 +182,7 @@ public static class WeaponLibrary
 			//},
 			new WeaponData {
 				Name="Hueso", WeaponType="ranged",
-				Damage=20f, Speed=100f, Lifetime=4f, FireRate=1.0f,
+				Damage=35f, Speed=100f, Lifetime=4f, FireRate=1.0f,
 				BulletScale=1.0f, PierceCount=1, BulletsPerShot=1,
 				SpawnOffset=10f, BulletScene=bone,
 				IconPath = "res://sprites/Sword.png"

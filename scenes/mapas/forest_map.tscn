@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bmer4j1oqdlts" path="res://sprites/music/tutoMusic.mp3" id="12_tltx5"]
 [ext_resource type="Script" uid="uid://boxrbp50aolct" path="res://scripts/managers/WorldSpawner.cs" id="13_dgeat"]
 [ext_resource type="Script" uid="uid://ckykmhws0iixd" path="res://scripts/areaTransicion/AreaTransicion.cs" id="13_n0wfb"]
+[ext_resource type="PackedScene" uid="uid://c4dgqqknn20pp" path="res://scenes/Interactivos/EnhanceTowers/LevelUpTower.tscn" id="14_ccmkw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpje1"]
 texture = ExtResource("1_2u2jk")
@@ -3445,5 +3446,8 @@ collision_mask = 5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1006307702]
 position = Vector2(2527.5, 561.75)
 shape = SubResource("RectangleShape2D_h0oqs")
+
+[node name="LevelUpTower" parent="." unique_id=98600160 instance=ExtResource("14_ccmkw")]
+position = Vector2(1883, 580)
 
 [editable path="ZonaRestringuida2"]

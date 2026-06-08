@@ -4,13 +4,13 @@ using System;
 public partial class PlayerStats : Node
 {
 	// Vida
-	public float MaxHp                   = 100f;
+	public float MaxHp                   = 999999f;
 	public float HpRegen                 = 0f;    // HP/segundo
 	public float LifeSteal               = 0f;    // 0.0 - 1.0 (%)
 	public float Thorns                  = 0f;    // daño reflejado
 
 	// Daño
-	public float DamageMultiplier        = 1f;
+	public float DamageMultiplier        = 6f;
 	public float MeleeDamageBonus        = 0f;    // bonus solo a melee
 	public float RangedDamageBonus       = 0f;    // bonus solo a distancia
 	public float MagicDamageBonus        = 0f;    // bonus solo a mágicas

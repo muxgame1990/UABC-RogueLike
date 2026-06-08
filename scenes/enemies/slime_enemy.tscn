@@ -66,6 +66,7 @@ radius = 10.049875
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_eto1c")
+Speed = 30.0
 ProjectileScene = ExtResource("2_syyus")
 ExpOrbScene = ExtResource("3_icv34")
 GoldCoinScene = ExtResource("4_fuxq2")

@@ -93,6 +93,18 @@ region = Rect2(0, 0, 150, 150)
 atlas = ExtResource("5_pr6qp")
 region = Rect2(0, 0, 150, 150)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwlde"]
+atlas = ExtResource("7_763vw")
+region = Rect2(45, 256, 45, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4ij5"]
+atlas = ExtResource("7_763vw")
+region = Rect2(90, 256, 45, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifjjb"]
+atlas = ExtResource("7_763vw")
+region = Rect2(135, 256, 45, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_rd5g2"]
 animations = [{
 "frames": [{
@@ -117,17 +129,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_14syq")
+"texture": SubResource("AtlasTexture_uwlde")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1ju67")
+"texture": SubResource("AtlasTexture_v4ij5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_syc3x")
+"texture": SubResource("AtlasTexture_ifjjb")
 }],
 "loop": false,
 "name": &"Ricochet",
-"speed": 30.0
+"speed": 15.0
 }]
 
 [sub_resource type="Animation" id="Animation_ex4g4"]
@@ -242,7 +254,7 @@ frame_progress = 1.0
 [node name="FireStrike" type="AnimatedSprite2D" parent="." unique_id=1488429894]
 visible = false
 texture_filter = 1
-position = Vector2(37, -16)
+position = Vector2(48, -6)
 scale = Vector2(1.2027085, 1.1507293)
 sprite_frames = SubResource("SpriteFrames_rd5g2")
 animation = &"Ricochet"

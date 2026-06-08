@@ -93,16 +93,16 @@ animations = [{
 collision_layer = 2
 collision_mask = 6
 script = ExtResource("1_38ino")
-XpValue = 500.0
+MaxHp = 180.0
+Speed = 30.0
 ExpOrbScene = ExtResource("2_5atup")
 GoldCoinScene = ExtResource("3_gpuif")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834419406]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_msvjk")
-animation = &"right"
+animation = &"left"
 autoplay = "right"
-frame_progress = 0.81651443
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2112409482]
 shape = SubResource("CircleShape2D_2aby3")

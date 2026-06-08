@@ -9,7 +9,7 @@ public partial class GameManager : Node
 	public float CurrentXp             { get; set; } = 0f;
 	public float XpToNextLevel         { get; set; } = 100f;
 	public float ElapsedTime           { get; set; } = 0f;
-	public float WinTime               { get; }       = 900f;
+	public float WinTime               { get; }       = 420f;
 	public int   Coins                 { get; set; } = 0;
 	
 	public string      SelectedCharacterScene { get; set; } = "res://scenes/player/cimarron_char.tscn";
@@ -17,10 +17,10 @@ public partial class GameManager : Node
 	public int         SelectedClassIndex     { get; set; } = 0;
 	public PassiveType SelectedPassive        { get; set; } = PassiveType.None;
 	public float diffModifier = 1f;
-	public float eliteProbability = 0.3f;
+	public float eliteProbability = 0.03f;
 	public int currentMapLevel {get; set; } = 0;
 	public bool isBossSpawned {get; set; } = false;
-	
+	public bool isBossDefeated {get; set;} = false;
 	//estado entre mapas
 	public List<WeaponData> SavedWeapons           { get; set; } = null;
 	public float            SavedCurrentHp         { get; set; } = -1f;
@@ -32,16 +32,17 @@ public partial class GameManager : Node
 
 	public override void _Process(double delta)
 	{
-		//if(currentMapLevel > 0 && isBossSpawned){
+		if(currentMapLevel > 0 && !isBossSpawned){
 		ElapsedTime += (float)delta;
-		//}
-		if (ElapsedTime >= WinTime)
-			EventManager.Instance.EmitGameWon();
+		}
+		//if (ElapsedTime >= WinTime)
+			//EventManager.Instance.EmitGameWon();
 	}
 	public void Transition(int nextMapLevel){
 		currentMapLevel = nextMapLevel;
 		ElapsedTime = 0f;
 		isBossSpawned = false;
+		isBossDefeated = false;
 		diffModifier *= 1.5f;
 	}
 	public void SavePlayerState(Player player){ //guardar estado del jugador
@@ -57,7 +58,7 @@ public partial class GameManager : Node
 
 	public void AddXp(float amount)
 	{
-		CurrentXp += amount * 500f; // aquí se puede aplicar XpMultiplier del PlayerStats | original x1
+		CurrentXp += amount * 1f; // aquí se puede aplicar XpMultiplier del PlayerStats | original x1
 		if (CurrentXp >= XpToNextLevel)
 		{
 			CurrentXp     -= XpToNextLevel;
@@ -80,8 +81,12 @@ public partial class GameManager : Node
 		Coins = 0;
 		XpToNextLevel = 100f;
 		ElapsedTime   = 0f;
-		Coins         = 0;
-		
+		//Coins         = 0;
+		isBossSpawned = false;
+		isBossDefeated = false;
+		currentMapLevel = 0;
+		diffModifier = 1f;
+		eliteProbability = 0.03f;
 		//limpiar estado al reiniciar
 		SavedWeapons = null;
 		SavedCurrentHp = -1f;

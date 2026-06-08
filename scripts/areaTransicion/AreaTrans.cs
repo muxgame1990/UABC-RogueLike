@@ -19,10 +19,13 @@ public partial class AreaTrans : Area2D
 	private async void OnBodyEntered(Node body)
 	{
 		if (_transitioning) return;
-		
 		GD.Print("Entró: " + body.Name);
 		if (!body.IsInGroup("player")) return;
-		
+		if (GameManager.Instance.currentMapLevel > 0 && !GameManager.Instance.isBossDefeated)
+ 		{
+ 		 GD.Print("Cambio bloqueado");
+		return;  
+		}
 		_transitioning = true;
 		if (body is Player player)
 			GameManager.Instance.SavePlayerState(player);

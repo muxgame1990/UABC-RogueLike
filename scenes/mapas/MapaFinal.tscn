@@ -20,8 +20,18 @@
 [ext_resource type="Texture2D" uid="uid://bp6pspt1h3sad" path="res://sprites/sprites3erNivel/Animation6.png" id="18_j7rc0"]
 [ext_resource type="Script" uid="uid://boxrbp50aolct" path="res://scripts/managers/WorldSpawner.cs" id="19_sgwi1"]
 [ext_resource type="Script" uid="uid://cwlvjma875fcw" path="res://scripts/managers/EnemySpawner.cs" id="20_mrdg4"]
-[ext_resource type="PackedScene" uid="uid://chqqw67o1uik2" path="res://scenes/enemies/floating_skull_enemy.tscn" id="21_a83cp"]
 [ext_resource type="PackedScene" uid="uid://chto80ec0cval" path="res://scenes/enemies/slime_enemy.tscn" id="22_6d4wj"]
+[ext_resource type="Resource" uid="uid://n41apwvdo1g0" path="res://scenes/enemies/SpawnData/plant_Enemy.tres" id="22_h7jmc"]
+[ext_resource type="Resource" uid="uid://dl6ba66ur2nhe" path="res://scenes/enemies/SpawnData/vampire_Enemy.tres" id="23_rjulw"]
+[ext_resource type="Resource" uid="uid://dfkhqqo3dwnmx" path="res://scenes/enemies/SpawnData/floating_skull_enemy.tres" id="24_lphl2"]
+[ext_resource type="Resource" uid="uid://goktio6cmeqi" path="res://scenes/enemies/SpawnData/bat_Enemy.tres" id="25_ihx6h"]
+[ext_resource type="Resource" uid="uid://1ddjj114toq2" path="res://scenes/enemies/SpawnData/oldGuardian_Enemy.tres" id="26_o6ovl"]
+[ext_resource type="PackedScene" uid="uid://c4dgqqknn20pp" path="res://scenes/Interactivos/EnhanceTowers/LevelUpTower.tscn" id="26_rjulw"]
+[ext_resource type="Resource" uid="uid://dgrij8cgj5sm6" path="res://scenes/enemies/SpawnData/dKnight_Enemy.tres" id="27_0oqed"]
+[ext_resource type="Resource" uid="uid://cgg8ne0hfu8m3" path="res://scenes/enemies/SpawnData/wolf_Enemy.tres" id="28_kpmb1"]
+[ext_resource type="Resource" uid="uid://bgoigks1t7tgm" path="res://scenes/enemies/SpawnData/necromancer_Enemy.tres" id="29_lrl1f"]
+[ext_resource type="Resource" uid="uid://rgq01t5833gi" path="res://scenes/enemies/SpawnData/skeleton_Enemy.tres" id="30_3uouv"]
+[ext_resource type="PackedScene" uid="uid://dgtm0prf268pr" path="res://scenes/enemies/wizard_boss.tscn" id="31_o6ovl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdayl"]
 texture = ExtResource("9_fbnw2")
@@ -16453,6 +16463,8 @@ tile_set = SubResource("TileSet_nhtgd")
 [node name="Area2D" type="Area2D" parent="." unique_id=569470951]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Area2D" unique_id=88304919]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/StaticBody2D" unique_id=1479056821]
 position = Vector2(226.5, 1460.5)
@@ -16461,6 +16473,8 @@ shape = SubResource("RectangleShape2D_h41sm")
 [node name="Area2D2" type="Area2D" parent="." unique_id=1825997730]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Area2D2" unique_id=1532241190]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2/StaticBody2D" unique_id=1244847077]
 position = Vector2(-1096, 259.5)
@@ -16470,6 +16484,8 @@ shape = SubResource("RectangleShape2D_62g2u")
 [node name="Area2D3" type="Area2D" parent="." unique_id=1532714013]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Area2D3" unique_id=295930459]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3/StaticBody2D" unique_id=382042410]
 position = Vector2(270.25, -832)
@@ -16478,6 +16494,8 @@ shape = SubResource("RectangleShape2D_u1ae5")
 [node name="Area2D4" type="Area2D" parent="." unique_id=559416691]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Area2D4" unique_id=284984676]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4/StaticBody2D" unique_id=1452340007]
 position = Vector2(1522.25, 322.25)
@@ -16489,6 +16507,34 @@ script = ExtResource("19_sgwi1")
 
 [node name="EnemySpawner" type="Node" parent="." unique_id=1275634896]
 script = ExtResource("20_mrdg4")
-MeleeEnemies = Array[PackedScene]([ExtResource("21_a83cp")])
 RangedEnemies = Array[PackedScene]([ExtResource("22_6d4wj")])
+spawnList = Array[Object]([ExtResource("22_h7jmc"), ExtResource("23_rjulw"), ExtResource("24_lphl2"), ExtResource("25_ihx6h"), ExtResource("26_o6ovl"), ExtResource("27_0oqed"), ExtResource("28_kpmb1"), ExtResource("29_lrl1f"), ExtResource("30_3uouv")])
+bossScene = ExtResource("31_o6ovl")
 BaseSpawnInterval = 0.2
+
+[node name="LevelUpTower" parent="." unique_id=98600160 instance=ExtResource("26_rjulw")]
+position = Vector2(-559, -486)
+
+[node name="LevelUpTower2" parent="." unique_id=1715094985 instance=ExtResource("26_rjulw")]
+position = Vector2(-428, 729)
+
+[node name="LevelUpTower3" parent="." unique_id=1431782590 instance=ExtResource("26_rjulw")]
+position = Vector2(1236, 801)
+
+[node name="LevelUpTower4" parent="." unique_id=671135606 instance=ExtResource("26_rjulw")]
+position = Vector2(-961, 1320)
+
+[node name="LevelUpTower5" parent="." unique_id=1834998728 instance=ExtResource("26_rjulw")]
+position = Vector2(1345, 1334)
+
+[node name="LevelUpTower6" parent="." unique_id=900634054 instance=ExtResource("26_rjulw")]
+position = Vector2(1343, -663)
+
+[node name="LevelUpTower7" parent="." unique_id=1010402906 instance=ExtResource("26_rjulw")]
+position = Vector2(171, 77)
+
+[node name="LevelUpTower8" parent="." unique_id=635458182 instance=ExtResource("26_rjulw")]
+position = Vector2(553, 803)
+
+[node name="LevelUpTower9" parent="." unique_id=1925324771 instance=ExtResource("26_rjulw")]
+position = Vector2(-22, 1106)
