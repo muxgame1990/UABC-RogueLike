@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://uu1yk1dr4okj" path="res://scenes/currency/coins/gold_coin.tscn" id="3_lj4jw"]
 [ext_resource type="Texture2D" uid="uid://catw88bpe8qp" path="res://sprites/Enemigos/Run.png" id="4_hvbpb"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ian0n"]
-radius = 19.104973
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7ktu"]
+radius = 21.0
+height = 88.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qv4in"]
 atlas = ExtResource("4_hvbpb")
@@ -73,8 +74,9 @@ animations = [{
 }]
 
 [node name="WizardBoss" type="CharacterBody2D" unique_id=1561850603]
+texture_filter = 1
 collision_layer = 2
-collision_mask = 6
+collision_mask = 2
 script = ExtResource("1_h7ktu")
 MaxHp = 12000.0
 Speed = 30.0
@@ -82,7 +84,7 @@ ExpOrbScene = ExtResource("2_f7uup")
 GoldCoinScene = ExtResource("3_lj4jw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=636373460]
-shape = SubResource("CircleShape2D_ian0n")
+shape = SubResource("CapsuleShape2D_h7ktu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=859387270]
 position = Vector2(-11, -29.999992)

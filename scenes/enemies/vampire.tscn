@@ -73,8 +73,9 @@ animations = [{
 radius = 6.0827627
 
 [node name="Vampire" type="CharacterBody2D" unique_id=1639020721]
+texture_filter = 1
 collision_layer = 2
-collision_mask = 6
+collision_mask = 2
 script = ExtResource("1_4mhiy")
 MaxHp = 180.0
 Speed = 30.0

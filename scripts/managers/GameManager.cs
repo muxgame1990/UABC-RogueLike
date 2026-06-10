@@ -62,8 +62,10 @@ public partial class GameManager : Node
 		if (CurrentXp >= XpToNextLevel)
 		{
 			CurrentXp     -= XpToNextLevel;
+			//Player.MaxHp += 25f;
 			CurrentLevel++;
 			XpToNextLevel *= 1.2f;
+			
 			EventManager.Instance.EmitLevelUp(CurrentLevel);
 		}
 		EventManager.Instance.EmitXpChanged(CurrentXp,XpToNextLevel);

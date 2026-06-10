@@ -15290,7 +15290,7 @@ script = ExtResource("23_7iwx6")
 RangedEnemies = Array[PackedScene]([ExtResource("25_0othq")])
 spawnList = Array[Object]([ExtResource("25_kxc8h"), ExtResource("26_1st3p"), ExtResource("27_iibi1"), ExtResource("28_2m0s8"), ExtResource("29_ij1o7"), ExtResource("30_2m7p8"), ExtResource("31_87vrx"), ExtResource("32_0vpj0"), ExtResource("33_s350l")])
 bossScene = ExtResource("34_2m0s8")
-BaseSpawnInterval = 0.2
+BaseSpawnInterval = 0.6
 
 [node name="LevelUpTower" parent="." unique_id=98600160 instance=ExtResource("29_1st3p")]
 position = Vector2(-549, -322)

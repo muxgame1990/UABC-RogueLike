@@ -7851,12 +7851,12 @@ shape = SubResource("RectangleShape2D_rclue")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="AreaRestringuida3" unique_id=1641356419]
 collision_layer = 5
-collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaRestringuida3/StaticBody2D" unique_id=1231393483]
 position = Vector2(-1072, 367.49997)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_o4poq")
+one_way_collision_margin = 5.6
 
 [node name="AreaRestringuida4" type="Area2D" parent="." unique_id=2066234808]
 
@@ -7898,7 +7898,7 @@ script = ExtResource("14_5yr0b")
 RangedEnemies = Array[PackedScene]([ExtResource("16_i5uqs")])
 spawnList = Array[Object]([ExtResource("16_d2tky"), ExtResource("17_1ovev"), ExtResource("18_8uj43"), ExtResource("19_min87"), ExtResource("20_c448a"), ExtResource("21_twtaf"), ExtResource("22_q6jhi"), ExtResource("23_1do5r"), ExtResource("24_x68re")])
 bossScene = ExtResource("19_0g5l4")
-BaseSpawnInterval = 0.2
+BaseSpawnInterval = 1.0
 
 [node name="LevelUpTower" parent="." unique_id=98600160 instance=ExtResource("20_1ovev")]
 position = Vector2(-428, -126)

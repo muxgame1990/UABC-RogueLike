@@ -120,6 +120,7 @@ public partial class EnemySpawner : Node
 		enemy.MaxHp  *= scaleMultiplier;
 		enemy.Speed  *= Mathf.Min(scaleMultiplier, 2f);
 		enemy.Damage *= scaleMultiplier;
+		enemy.XpValue *= scaleMultiplier;
 		if (isElite)
 			{
 				enemy.Modulate = new Color(1, 0, 0);
@@ -138,6 +139,7 @@ public partial class EnemySpawner : Node
 		enemy.MaxHp       *= scaleMultiplier;
 		enemy.Speed       *= Mathf.Min(scaleMultiplier, 2f);
 		enemy.Damage      *= scaleMultiplier;
+		enemy.XpValue *= scaleMultiplier;
 			if (isElite)
 			{
 				enemy.Modulate = new Color(1, 0, 0);
@@ -156,6 +158,7 @@ public partial class EnemySpawner : Node
 		float scaleMultiplier = GameManager.Instance.diffModifier * mapScaling;
 		boss.MaxHp *= scaleMultiplier;
 		boss.Damage *= scaleMultiplier;
+		boss.XpValue *= scaleMultiplier;
 		_player.GetParent().AddChild(boss);
 		boss.GlobalPosition = GetSpawnPosition();
 	}

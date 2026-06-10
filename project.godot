@@ -75,7 +75,7 @@ Settings/Show_Tooltips=true
 [application]
 
 config/name="uabc-roguelike"
-config/description="ahinomassintantacremapaquenoseagadeelatostada
+config/description="
 "
 run/main_scene="uid://boss5jmgv6kju"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
@@ -92,6 +92,7 @@ GameManager="*uid://dxu5basqptuid"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="viewport"
 
 [dotnet]
