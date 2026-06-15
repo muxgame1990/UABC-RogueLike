@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 public partial class AreaTrans : Area2D
 {
-	[Export] public string RutaEscena = "res://scenes/mapas/MapaFinal.tscn";
+	[Export] public string RutaEscena = "res://scenes/loadscreens/load_screen_3.tscn";
 	[Export] public int targetMapLevel = 3;
 	private ColorRect fade;
 	private bool      _transitioning = false;

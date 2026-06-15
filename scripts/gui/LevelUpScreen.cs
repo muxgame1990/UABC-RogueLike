@@ -88,7 +88,7 @@ private void UpdateButtons()
 			{
 				var w = available[i];
 				cards[i].Visible = true;
-				cards[i].Text    = $"{w.Name}\nDano:{w.Damage} FR:{w.FireRate}s Pierce:{w.PierceCount}";
+				cards[i].Text    = $"{w.Name}\nDaño:{w.Damage} FR:{w.FireRate}s Pierce:{w.PierceCount}";
 				cards[i].Pressed += () => SelectWeapon(w);
 			}
 			else cards[i].Visible = false;

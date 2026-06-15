@@ -116,6 +116,14 @@ offset_right = 501.5
 offset_bottom = 50.0
 text = "OTRO"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsPanel" unique_id=911690026]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="GameOptionsPanel" type="Panel" parent="." unique_id=1408088611]
 layout_mode = 0
 offset_left = 64.0
@@ -150,25 +158,30 @@ offset_top = 28.0
 offset_right = 976.5
 offset_bottom = 206.0
 
-[node name="CameraVibrationsPanel" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel" unique_id=1416149584]
-layout_mode = 0
-offset_right = 976.0
-offset_bottom = 25.0
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel" unique_id=705861339]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/CameraVibrationsPanel" unique_id=1249994745]
+[node name="CameraVibrationsPanel" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/VBoxContainer" unique_id=1416149584]
+custom_minimum_size = Vector2(976, 25)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/VBoxContainer/CameraVibrationsPanel" unique_id=1249994745]
 layout_mode = 0
 offset_right = 166.0
 offset_bottom = 26.0
 text = "Vibracion de Camara"
 vertical_alignment = 1
 
-[node name="RetrasoDControlPanel2" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel" unique_id=59367792]
-layout_mode = 0
-offset_top = 35.0
-offset_right = 976.0
-offset_bottom = 60.0
+[node name="RetrasoDControlPanel2" type="Panel" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/VBoxContainer" unique_id=59367792]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/RetrasoDControlPanel2" unique_id=487327501]
+[node name="Label" type="Label" parent="GameOptionsPanel/GamePanel/OpcionsGamePanel/VBoxContainer/RetrasoDControlPanel2" unique_id=487327501]
 layout_mode = 0
 offset_right = 166.0
 offset_bottom = 26.0

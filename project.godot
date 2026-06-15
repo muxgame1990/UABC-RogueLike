@@ -92,7 +92,7 @@ GameManager="*uid://dxu5basqptuid"
 
 [display]
 
-window/size/mode=3
+window/size/mode=1
 window/stretch/mode="viewport"
 
 [dotnet]
